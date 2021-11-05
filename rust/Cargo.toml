@@ -1,0 +1,11 @@
+[package]
+name = "aoc-2021"
+description = "You know the drill, AOC 2021 in Rust."
+authors = [ "Tom van Dijk <129102@dr.nassaucollege.nl>" ]
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+anyhow = "1.0.45"
