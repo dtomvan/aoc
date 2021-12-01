@@ -7,7 +7,7 @@ import java.nio.charset.Charset
 
 fun main(args: Array<String>) {
     val index = args.getOrNull(0)?.toInt() ?: throw IllegalArgumentException("Illegal index")
-    println("Running solution for day $index (https://adventofcode.com/2020/day/$index)")
+    println("Running solution for day $index (https://adventofcode.com/2021/day/$index)")
     println()
 
     when (index) {
@@ -17,5 +17,7 @@ fun main(args: Array<String>) {
 }
 
 // Util to get input
-fun getInput(day: Int) =
-    String(File("day-${day.toString().padStart(2, '0')}.txt").inputStream().readBytes(), Charset.defaultCharset())
+fun getInputFile(day: Int) = File("inputs", "day-${day.toString().padStart(2, '0')}.txt")
+fun getStream(day: Int) = getInputFile(day).inputStream()
+fun getInput(day: Int): String = String(getStream(day).readBytes(), Charset.defaultCharset())
+fun getInputLines(day: Int): List<String> = getStream(day).bufferedReader().readLines()
