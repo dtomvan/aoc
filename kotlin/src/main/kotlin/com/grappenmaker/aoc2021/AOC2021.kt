@@ -4,15 +4,26 @@ package com.grappenmaker.aoc2021
 
 import java.io.File
 import java.nio.charset.Charset
+import kotlin.system.measureTimeMillis
 
 fun main(args: Array<String>) {
+    val breaker = "=".repeat(20)
+
     val index = args.getOrNull(0)?.toInt() ?: throw IllegalArgumentException("Illegal index")
     println("Running solution for day $index (https://adventofcode.com/2021/day/$index)")
     println()
+    println(breaker)
 
-    when (index) {
-        1 -> solveDay1()
-        else -> println("Couldn't find solution for day $index")
+    measureTimeMillis {
+        when (index) {
+            1 -> solveDay1()
+            2 -> solveDay2()
+            else -> println("Couldn't find solution for day $index")
+        }
+    }.also {
+        println(breaker)
+        println()
+        println("Took ${it}ms to run solution.")
     }
 }
 

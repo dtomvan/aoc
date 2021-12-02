@@ -1,3 +1,4 @@
+import java.lang.reflect.InvocationTargetException
 import java.net.URLClassLoader
 
 plugins {
@@ -30,7 +31,11 @@ tasks.register("runSolution") {
         val newLoader = URLClassLoader(paths)
 
         val parameters = arrayOf(properties["day"] as String? ?: "1")
-        Class.forName(mainClassPath, true, newLoader).getMethod("main", parameters::class.java)(null, parameters)
+        try {
+            Class.forName(mainClassPath, true, newLoader).getMethod("main", parameters::class.java)(null, parameters)
+        } catch (e: InvocationTargetException) {
+            throw GradleScriptException("Exception while executing solution", e.targetException)
+        }
     }
 }
 
