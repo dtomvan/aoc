@@ -1,6 +1,6 @@
 use itertools::Itertools;
 
-pub fn main() -> anyhow::Result<()> {
+pub fn main() -> anyhow::Result<(usize, usize)> {
     let ops = include_str!("../../../inputs/day-2.txt")
         .split_whitespace()
         .tuples()
@@ -12,7 +12,7 @@ pub fn main() -> anyhow::Result<()> {
         b'f' => (x + inc, d),
         _ => unreachable!(),
     });
-    println!("Part 1: {}", x * d);
+    let part_1 = x * d;
 
     let (x, d, _) = ops.fold((0, 0, 0), |(x, d, a), (op, inc)| match op {
         b'u' => (x, d, a - inc),
@@ -21,7 +21,7 @@ pub fn main() -> anyhow::Result<()> {
         _ => unreachable!(),
     });
 
-    println!("Part 2: {}", x * d);
+    let part_2 = x * d;
 
-    Ok(())
+    Ok((part_1, part_2))
 }

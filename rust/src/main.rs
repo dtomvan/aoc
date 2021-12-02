@@ -1,4 +1,6 @@
 mod days;
+use std::time::Instant;
+
 use days::*;
 
 fn main() -> anyhow::Result<()> {
@@ -33,7 +35,13 @@ fn main() -> anyhow::Result<()> {
         };
 
         println!("\n=== Day {:02} ===", day);
-        func()?;
+
+        let instant = Instant::now();
+        let (part_1, part_2) = func()?;
+        let elapsed = instant.elapsed().as_micros();
+
+        println!("Part 1: {}\nPart 2: {}", part_1, part_2);
+        println!("Took {} μs", elapsed);
     }
     Ok(())
 }

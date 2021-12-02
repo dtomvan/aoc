@@ -1,18 +1,18 @@
-pub fn main() -> anyhow::Result<()> {
+pub fn main() -> anyhow::Result<(usize, usize)> {
     // Part 1
     let input = include_str!("../../../inputs/day-1.txt");
     let numbers = input.lines().filter_map(|x| x.parse::<usize>().ok());
-    println!("Part 1: {}", solution(&numbers));
+    let part_1 = solution(&numbers);
 
     // Part 2
-    let solution = solution(
+    let part_2 = solution(
         &numbers
             .collect::<Vec<_>>()
             .windows(3)
             .map(|x| x.iter().sum()),
     );
-    println!("Part 2: {}", solution);
-    Ok(())
+
+    Ok((part_1, part_2))
 }
 
 fn solution<I: Iterator<Item = usize> + Clone>(iter: &I) -> usize {
