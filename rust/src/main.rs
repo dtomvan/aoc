@@ -37,11 +37,15 @@ fn main() -> anyhow::Result<()> {
         println!("\n=== Day {:02} ===", day);
 
         let instant = Instant::now();
-        let (part_1, part_2) = func()?;
+        let result = func();
         let elapsed = instant.elapsed().as_micros();
 
-        println!("Part 1: {}\nPart 2: {}", part_1, part_2);
-        println!("Took {} μs", elapsed);
+        if let Ok((part_1, part_2)) = result {
+            println!("Part 1: {}\nPart 2: {}", part_1, part_2);
+            println!("Took {} μs", elapsed);
+        } else {
+            eprintln!("Error: {}", result.unwrap_err());
+        }
     }
     Ok(())
 }
