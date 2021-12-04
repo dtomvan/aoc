@@ -1,3 +1,4 @@
+#![feature(drain_filter)]
 mod days;
 use std::time::Instant;
 
