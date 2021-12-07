@@ -15,3 +15,10 @@ itertools = "0.10.1"
 
 [build-dependencies]
 loc = "0.5.0"
+
+[dev-dependencies]
+criterion = "0.3.5"
+
+[[bench]]
+name = "all_days"
+harness = false

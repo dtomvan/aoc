@@ -1,8 +1,6 @@
-#![feature(drain_filter)]
-mod days;
 use std::{collections::HashMap, time::Instant};
 
-use days::*;
+use aoc_2021::days::*;
 
 include!(concat!(env!("OUT_DIR"), "/loc.rs"));
 

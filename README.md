@@ -43,6 +43,42 @@ Took 10 μs
 Lines of code: 25
 ```
 
+## Benches
+```
+day 1                   time:   [44.486 us 44.582 us 44.697 us]
+Found 11 outliers among 100 measurements (11.00%)
+  6 (6.00%) low severe
+  3 (3.00%) low mild
+  1 (1.00%) high mild
+  1 (1.00%) high severe
+
+day 2                   time:   [47.037 us 47.077 us 47.121 us]
+Found 9 outliers among 100 measurements (9.00%)
+  3 (3.00%) high mild
+  6 (6.00%) high severe
+
+day 3                   time:   [59.928 us 60.003 us 60.079 us]
+Found 13 outliers among 100 measurements (13.00%)
+  1 (1.00%) low mild
+  7 (7.00%) high mild
+  5 (5.00%) high severe
+
+day 4                   time:   [4.6520 ms 4.6575 ms 4.6662 ms]
+Found 9 outliers among 100 measurements (9.00%)
+  3 (3.00%) high mild
+  6 (6.00%) high severe
+
+day 5                   time:   [17.998 ms 18.034 ms 18.090 ms]
+Found 7 outliers among 100 measurements (7.00%)
+  4 (4.00%) high mild
+  3 (3.00%) high severe
+
+day 6                   time:   [6.7490 us 6.7609 us 6.7734 us]
+Found 9 outliers among 100 measurements (9.00%)
+  5 (5.00%) high mild
+  4 (4.00%) high severe
+```
+
 ## TODO
 - [x] Day 1
 - [x] Day 2
