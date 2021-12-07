@@ -4,6 +4,8 @@ description = "You know the drill, AOC 2021 in Rust."
 authors = [ "Tom van Dijk <129102@dr.nassaucollege.nl>" ]
 version = "0.1.0"
 edition = "2021"
+repository = "https://github.com/dtomvan/aoc-2021"
+keywords = ["advent-of-code"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

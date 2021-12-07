@@ -2,9 +2,10 @@ use itertools::Itertools;
 use std::collections::VecDeque;
 
 pub fn main() -> anyhow::Result<(usize, usize)> {
-    let input: Vec<usize> = include_str!("../../../inputs/day-6.txt")
-        .split(",")
-        .map(|x| x.trim().parse().unwrap())
+    let input: Vec<usize> = include_str!("../../inputs/day-6.txt")
+        .trim()
+        .split(',')
+        .map(|x| x.parse().unwrap())
         .collect_vec();
 
     let mut fish: VecDeque<_> = [0; 9].into();

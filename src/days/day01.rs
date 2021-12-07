@@ -1,6 +1,6 @@
 pub fn main() -> anyhow::Result<(usize, usize)> {
     // Part 1
-    let input = include_str!("../../../inputs/day-1.txt");
+    let input = include_str!("../../inputs/day-1.txt");
     let numbers: Vec<_> = input
         .lines()
         .filter_map(|x| x.parse::<usize>().ok())

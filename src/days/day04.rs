@@ -1,13 +1,13 @@
 use std::str::FromStr;
 
 pub fn main() -> anyhow::Result<(usize, usize)> {
-    let input = include_str!("../../../inputs/day-4.txt");
+    let input = include_str!("../../inputs/day-4.txt");
     let mut input = input.split("\n\n");
 
     let draws: Vec<usize> = input
         .next()
         .unwrap()
-        .split(",")
+        .split(',')
         .filter_map(|x| x.parse().ok())
         .collect();
     let mut boards = input
@@ -21,7 +21,7 @@ pub fn main() -> anyhow::Result<(usize, usize)> {
             board
                 .iter_mut()
                 .filter(|x| x.has(draw))
-                .for_each(|x| x.fill());
+                .for_each(Cell::fill);
             if board.won() {
                 let score = draw
                     * board
@@ -53,7 +53,7 @@ impl FromStr for Board {
     type Err = ();
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        Ok(Board(
+        Ok(Self(
             s.lines()
                 .map(|x| {
                     x.split_whitespace()
@@ -86,12 +86,12 @@ impl Board {
 }
 
 struct Cols<'a> {
-    vec: &'a Vec<Vec<Cell>>,
+    vec: &'a [Vec<Cell>],
     index: usize,
 }
 
 impl<'a> Cols<'a> {
-    fn new(vec: &'a Vec<Vec<Cell>>) -> Self {
+    const fn new(vec: &'a [Vec<Cell>]) -> Self {
         Self { vec, index: 0 }
     }
 }
@@ -100,12 +100,12 @@ impl<'a> Iterator for Cols<'a> {
     type Item = Vec<&'a Cell>;
 
     fn next(&mut self) -> Option<Self::Item> {
-        let result: Vec<_> = self.vec.iter().flat_map(|x| x.get(self.index)).collect();
+        let result: Vec<_> = self.vec.iter().filter_map(|x| x.get(self.index)).collect();
         self.index += 1;
-        if result.len() > 0 {
-            Some(result)
-        } else {
+        if result.is_empty() {
             None
+        } else {
+            Some(result)
         }
     }
 }
@@ -118,14 +118,10 @@ enum Cell {
 
 impl Cell {
     fn fill(&mut self) {
-        *self = Self::Filled
+        *self = Self::Filled;
     }
-    fn filled(&self) -> bool {
-        if let Self::Filled = self {
-            true
-        } else {
-            false
-        }
+    const fn filled(&self) -> bool {
+        matches!(self, Self::Filled)
     }
     fn has(&self, val: usize) -> bool {
         if let Self::Empty(x) = self {

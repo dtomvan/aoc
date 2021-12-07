@@ -1,5 +1,5 @@
 pub fn main() -> anyhow::Result<(usize, usize)> {
-    let input = include_str!("../../../inputs/day-3.txt");
+    let input = include_str!("../../inputs/day-3.txt");
 
     let numbers: Vec<_> = input
         .lines()
@@ -27,9 +27,9 @@ fn find_most_common(nums: &[usize], bit: usize) -> usize {
     let mut sum = 0;
     for x in nums.iter() {
         if (x >> bit) & 1 == 1 {
-            sum += 1
+            sum += 1;
         } else {
-            sum -= 1
+            sum -= 1;
         }
     }
     (sum >= 0) as usize
