@@ -82,9 +82,9 @@ Found 7 outliers among 100 measurements (7.00%)
 day 6                   time:   [6.7490 us 6.7609 us 6.7734 us]
 Found 9 outliers among 100 measurements (9.00%)
   5 (5.00%) high mild
-  4
+  4 (4.00%) high severe
 
-day 7                   time:   [33.610 us 33.635 us 33.664 us]                   
+day 7                   time:   [33.610 us 33.635 us 33.664 us]
                         change: [-98.306% -98.304% -98.302%] (p = 0.00 < 0.05)
                         Performance has improved.
 Found 8 outliers among 100 measurements (8.00%)
