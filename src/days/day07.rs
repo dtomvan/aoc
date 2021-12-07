@@ -10,20 +10,15 @@ pub fn main() -> anyhow::Result<(usize, usize)> {
     input.sort_unstable();
 
     let half_len = input.len() / 2;
-    let mean = ((input[half_len] + input[(half_len) + input.len() % 2]) / 2) as isize;
-    let total_fuel = input.iter().fold(0, |acc, x| acc + (x - mean).abs());
+    let median = ((input[half_len] + input[(half_len) + input.len() % 2]) / 2) as isize;
+    let part_1 = input.iter().fold(0, |acc, x| acc + (x - median).abs());
+    let mean = input.iter().sum::<isize>() / input.len() as isize;
 
-    let part_2 = (input[0]..input[input.len() - 1]).fold(0, |acc, x| {
-        let fuel = input.iter().fold(0, |acc, y| acc + sum((x - y).abs()));
-
-        if fuel < acc || acc == 0 {
-            fuel
-        } else {
-            acc
-        }
+    let part_2 = input.iter().fold(0, |acc, x| {
+        acc + sum((x - mean).abs())
     });
 
-    Ok((total_fuel as usize, part_2 as usize))
+    Ok((part_1 as usize, part_2 as usize))
 }
 
 fn sum(n: isize) -> isize {

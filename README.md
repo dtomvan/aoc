@@ -45,8 +45,8 @@ Lines of code: 25
 === Day 07 ===
 Part 1: 343605
 Part 2: 96744904
-Took 2017 μs
-Lines of code: 24
+Took 55 μs
+Lines of code: 20
 ```
 
 ## Benches
@@ -84,10 +84,12 @@ Found 9 outliers among 100 measurements (9.00%)
   5 (5.00%) high mild
   4
 
-day 7                   time:   [1.9815 ms 1.9829 ms 1.9848 ms]
-Found 15 outliers among 100 measurements (15.00%)
+day 7                   time:   [33.610 us 33.635 us 33.664 us]                   
+                        change: [-98.306% -98.304% -98.302%] (p = 0.00 < 0.05)
+                        Performance has improved.
+Found 8 outliers among 100 measurements (8.00%)
   1 (1.00%) high mild
-  14 (14.00%) high severe(4.00%) high severe
+  7 (7.00%) high severe
 ```
 
 ## TODO
