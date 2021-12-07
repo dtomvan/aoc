@@ -1,7 +1,7 @@
 use itertools::Itertools;
 
 pub fn main() -> anyhow::Result<(usize, usize)> {
-    let ops = include_str!("../../../inputs/day-2.txt")
+    let ops = include_str!("../../inputs/day-2.txt")
         .split_whitespace()
         .tuples()
         .map(|(op, inc)| (op.as_bytes()[0], inc.parse::<usize>().unwrap()));

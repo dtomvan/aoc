@@ -1,5 +1,5 @@
 pub fn main() -> anyhow::Result<(usize, usize)> {
-    let _input = include_str!("../../../inputs/day-22.txt");
+    let _input = include_str!("../../inputs/day-16.txt");
 
     Err(anyhow::anyhow!("Not implemented."))
 }

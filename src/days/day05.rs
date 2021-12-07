@@ -5,11 +5,11 @@ type Num = i32;
 type Point = (Num, Num);
 
 pub fn main() -> anyhow::Result<(usize, usize)> {
-    let input = include_str!("../../../inputs/day-5.txt")
+    let input = include_str!("../../inputs/day-5.txt")
         .replace(" -> ", " ")
         .split_whitespace()
         .filter_map(|x| {
-            x.split(",")
+            x.split(',')
                 .map(|x| x.parse::<Num>().unwrap())
                 .collect_tuple()
         })
