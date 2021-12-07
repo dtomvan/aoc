@@ -10,3 +10,6 @@ edition = "2021"
 [dependencies]
 anyhow = "1.0.45"
 itertools = "0.10.1"
+
+[build-dependencies]
+loc = "0.5.0"
