@@ -29,5 +29,9 @@ pub fn day_7(c: &mut Criterion) {
     c.bench_function("day 7", |b| b.iter(|| day07::main()));
 }
 
-criterion_group!(all_days, day_1, day_2, day_3, day_4, day_5, day_6, day_7);
+pub fn day_8(c: &mut Criterion) {
+    c.bench_function("day 8", |b| b.iter(|| day08::main()));
+}
+
+criterion_group!(all_days, day_1, day_2, day_3, day_4, day_5, day_6, day_7, day_8);
 criterion_main!(all_days);
