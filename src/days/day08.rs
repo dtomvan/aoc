@@ -44,7 +44,6 @@ pub fn main() -> anyhow::Result<(usize, usize)> {
                 _ => panic!("Unexpected 7-seg digit"),
             };
             sum += num * acc;
-            dbg!(sum, num * acc);
             acc / 10
         });
     }

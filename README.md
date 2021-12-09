@@ -2,7 +2,7 @@
 These are my AoC 2021 solutions, written in rust.
 
 ```console
-$ cargo r --release -- 1 2 3 4 5 6
+$ cargo r --release -- 1 2 3 4 5 6 7 8
     Finished release [optimized] target(s) in 0.01s
      Running `target/release/aoc-2021 1 2 3 4 5 6`
 
@@ -47,6 +47,12 @@ Part 1: 343605
 Part 2: 96744904
 Took 55 μs
 Lines of code: 20
+
+=== Day 08 ===
+Part 1: 409
+Part 2: 1024649
+Took 237 μs
+Lines of code: 48
 ```
 
 ## Benches
@@ -90,6 +96,11 @@ day 7                   time:   [33.610 us 33.635 us 33.664 us]
 Found 8 outliers among 100 measurements (8.00%)
   1 (1.00%) high mild
   7 (7.00%) high severe
+
+day 8                   time:   [187.20 us 187.43 us 187.69 us]
+Found 4 outliers among 100 measurements (4.00%)
+  3 (3.00%) high mild
+  1 (1.00%) high severe
 ```
 
 ## TODO
@@ -100,7 +111,7 @@ Found 8 outliers among 100 measurements (8.00%)
 - [x] Day 5
 - [x] Day 6
 - [x] Day 7
-- [ ] Day 8
+- [x] Day 8
 - [ ] Day 9
 - [ ] Day 10
 - [ ] Day 11
