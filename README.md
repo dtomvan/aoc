@@ -53,6 +53,18 @@ Part 1: 409
 Part 2: 1024649
 Took 237 μs
 Lines of code: 48
+
+=== Day 09 ===
+Part 1: 475
+Part 2: 1092012
+Took 3253 μs
+Lines of code: 53
+
+=== Day 10 ===
+Part 1: 318081
+Part 2: 4361305341
+Took 175 μs
+Lines of code: 42
 ```
 
 ## Benches
@@ -101,6 +113,15 @@ day 8                   time:   [187.20 us 187.43 us 187.69 us]
 Found 4 outliers among 100 measurements (4.00%)
   3 (3.00%) high mild
   1 (1.00%) high severe
+
+day 9                   time:   [1.1859 ms 1.1878 ms 1.1901 ms]
+Found 11 outliers among 100 measurements (11.00%)
+  7 (7.00%) high mild
+  4 (4.00%) high severe
+
+day 10                  time:   [49.207 us 49.325 us 49.479 us]
+Found 7 outliers among 100 measurements (7.00%)
+  7 (7.00%) high severe
 ```
 
 ## TODO
@@ -112,8 +133,8 @@ Found 4 outliers among 100 measurements (4.00%)
 - [x] Day 6
 - [x] Day 7
 - [x] Day 8
-- [ ] Day 9
-- [ ] Day 10
+- [x] Day 9
+- [x] Day 10
 - [ ] Day 11
 - [ ] Day 12
 - [ ] Day 13
