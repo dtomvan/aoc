@@ -65,6 +65,12 @@ Part 1: 318081
 Part 2: 4361305341
 Took 175 μs
 Lines of code: 42
+
+=== Day 11 ===
+Part 1: 1669
+Part 2: 351
+Took 1626 μs
+Lines of code: 78
 ```
 
 ## Benches
@@ -122,6 +128,11 @@ Found 11 outliers among 100 measurements (11.00%)
 day 10                  time:   [49.207 us 49.325 us 49.479 us]
 Found 7 outliers among 100 measurements (7.00%)
   7 (7.00%) high severe
+
+day 11                  time:   [1.3536 ms 1.3550 ms 1.3567 ms]
+Found 15 outliers among 100 measurements (15.00%)
+  10 (10.00%) high mild
+  5 (5.00%) high severe
 ```
 
 ## TODO
@@ -135,7 +146,7 @@ Found 7 outliers among 100 measurements (7.00%)
 - [x] Day 8
 - [x] Day 9
 - [x] Day 10
-- [ ] Day 11
+- [x] Day 11
 - [ ] Day 12
 - [ ] Day 13
 - [ ] Day 14
