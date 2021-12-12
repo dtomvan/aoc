@@ -23,17 +23,17 @@ pub fn main() -> anyhow::Result<(usize, usize)> {
     for (i, j) in low_indices.iter() {
         basin_sizes.push(acc_basin_size(&mut vec![], 0, &map, *i, *j));
     }
-    basin_sizes.sort();
-    let part_2 = basin_sizes.into_iter().rev().take(3).fold(1, |acc, x| acc * x);
+    basin_sizes.sort_unstable();
+    let part_2: u32 = basin_sizes.into_iter().rev().take(3).product();
 
     Ok((part_1 as usize, part_2 as usize))
 }
 
-fn acc_basin_size(mut scanned: &mut Vec<(usize, usize)>, acc: u32, map: &Vec<Vec<u32>>, i: usize, j: usize) -> u32 {
+fn acc_basin_size(scanned: &mut Vec<(usize, usize)>, acc: u32, map: &[Vec<u32>], i: usize, j: usize) -> u32 {
     let num = map.get(i).and_then(|x| x.get(j));
     if num.is_none() { return 0; }
 
-    let (up, down, left, right) = get_directions(&map, i, j);
+    let (up, down, left, right) = get_directions(map, i, j);
     [up, down, left, right].into_iter().enumerate().fold(acc, |acc, (k, x)| {
         let (i, j) = match k {
             0 => (i.overflowing_sub(1).0, j),
@@ -44,14 +44,14 @@ fn acc_basin_size(mut scanned: &mut Vec<(usize, usize)>, acc: u32, map: &Vec<Vec
         };
         if x < &9 && !scanned.contains(&(i, j)) {
             scanned.push((i, j));
-            acc_basin_size(&mut scanned, acc + 1, &map, i, j)
+            acc_basin_size(scanned, acc + 1, map, i, j)
         } else {
             acc
         }
     })
 }
 
-fn get_directions(map: &Vec<Vec<u32>>, i: usize, j: usize) -> (&u32, &u32, &u32, &u32) {
+fn get_directions(map: &[Vec<u32>], i: usize, j: usize) -> (&u32, &u32, &u32, &u32) {
     let up = if i == 0 { &10 } else { &map[i - 1][j] };
     let down = map.get(i + 1).and_then(|x| x.get(j)).unwrap_or(&10);
     let left = if j == 0 { &10 } else { &map[i][j - 1] };
