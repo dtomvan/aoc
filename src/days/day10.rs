@@ -41,7 +41,7 @@ pub fn main() -> anyhow::Result<(usize, usize)> {
         }
         part_2.push(total_points);
     }
-    part_2.sort();
+    part_2.sort_unstable();
 
     Ok((part_1, part_2[part_2.len() / 2]))
 }
