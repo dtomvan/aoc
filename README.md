@@ -88,6 +88,12 @@ Part 1: 664
 Part 2: 0
 Took 442 μs
 Lines of code: 68
+
+=== Day 14 ===
+Part 1: 2851
+Part 2: 10002813279337
+Took 1035 μs
+Lines of code: 59
 ```
 
 ## Benches
@@ -160,6 +166,11 @@ day 13                  time:   [97.750 us 97.890 us 98.063 us]
 Found 16 outliers among 100 measurements (16.00%)
   4 (4.00%) high mild
   12 (12.00%) high severe
+
+day 14                  time:   [1.0032 ms 1.0060 ms 1.0090 ms]
+Found 11 outliers among 100 measurements (11.00%)
+  9 (9.00%) high mild
+  2 (2.00%) high severe
 ```
 
 ## TODO
@@ -176,7 +187,7 @@ Found 16 outliers among 100 measurements (16.00%)
 - [x] Day 11
 - [x] Day 12
 - [x] Day 13
-- [ ] Day 14
+- [x] Day 14
 - [ ] Day 15
 - [ ] Day 16
 - [ ] Day 17
