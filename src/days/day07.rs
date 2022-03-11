@@ -14,9 +14,7 @@ pub fn main() -> anyhow::Result<(usize, usize)> {
     let part_1 = input.iter().fold(0, |acc, x| acc + (x - median).abs());
     let mean = input.iter().sum::<isize>() / input.len() as isize;
 
-    let part_2 = input.iter().fold(0, |acc, x| {
-        acc + sum((x - mean).abs())
-    });
+    let part_2 = input.iter().fold(0, |acc, x| acc + sum((x - mean).abs()));
 
     Ok((part_1 as usize, part_2 as usize))
 }

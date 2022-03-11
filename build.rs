@@ -21,6 +21,14 @@ fn main() {
     }
 
     let dest_path = Path::new(&out_dir).join("loc.rs");
-    fs::write(&dest_path, format!("const PAIRS: [(&str, u32); {}] = {:?};", map.len(), map.iter().collect::<Vec<_>>())).unwrap();
+    fs::write(
+        &dest_path,
+        format!(
+            "const PAIRS: [(&str, u32); {}] = {:?};",
+            map.len(),
+            map.iter().collect::<Vec<_>>()
+        ),
+    )
+    .unwrap();
     println!("cargo:rerun-if-changed=src");
 }
