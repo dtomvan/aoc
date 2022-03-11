@@ -5,11 +5,7 @@ pub fn main() -> anyhow::Result<(usize, usize)> {
 
     let parsed_input = input
         .lines()
-        .map(|x| {
-            x.split(" | ")
-                .collect_tuple::<(_, _)>()
-                .unwrap()
-        })
+        .map(|x| x.split(" | ").collect_tuple::<(_, _)>().unwrap())
         .collect_vec();
 
     let part_1 = parsed_input
@@ -31,16 +27,16 @@ pub fn main() -> anyhow::Result<(usize, usize)> {
 
         outp.split_whitespace().fold(1000, |acc, x| {
             let num = match (x.len(), common_with(x, one), common_with(x, four)) {
-                (2,_,_) => 1,
-                (5,_,2) => 2,
-                (5,2,_) => 3,
-                (4,_,_) => 4,
-                (5,1,_) => 5,
-                (6,1,_) => 6,
-                (3,_,_) => 7,
-                (7,_,_) => 8,
-                (6,_,4) => 9,
-                (6,_,3) => 0,
+                (2, _, _) => 1,
+                (5, _, 2) => 2,
+                (5, 2, _) => 3,
+                (4, _, _) => 4,
+                (5, 1, _) => 5,
+                (6, 1, _) => 6,
+                (3, _, _) => 7,
+                (7, _, _) => 8,
+                (6, _, 4) => 9,
+                (6, _, 3) => 0,
                 _ => panic!("Unexpected 7-seg digit"),
             };
             sum += num * acc;

@@ -62,8 +62,7 @@ fn fold(mut input: Vec<(usize, usize)>, dir: &str, amount: usize) -> Vec<(usize,
 
 #[cfg(not(debug_assertions))]
 #[allow(unused_variables)]
-fn print_dots(dots: Vec<(usize, usize)>) {
-}
+fn print_dots(dots: Vec<(usize, usize)>) {}
 
 #[cfg(debug_assertions)]
 fn print_dots(dots: Vec<(usize, usize)>) {

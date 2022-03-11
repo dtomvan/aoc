@@ -29,26 +29,37 @@ pub fn main() -> anyhow::Result<(usize, usize)> {
     Ok((part_1 as usize, part_2 as usize))
 }
 
-fn acc_basin_size(scanned: &mut Vec<(usize, usize)>, acc: u32, map: &[Vec<u32>], i: usize, j: usize) -> u32 {
+fn acc_basin_size(
+    scanned: &mut Vec<(usize, usize)>,
+    acc: u32,
+    map: &[Vec<u32>],
+    i: usize,
+    j: usize,
+) -> u32 {
     let num = map.get(i).and_then(|x| x.get(j));
-    if num.is_none() { return 0; }
+    if num.is_none() {
+        return 0;
+    }
 
     let (up, down, left, right) = get_directions(map, i, j);
-    [up, down, left, right].into_iter().enumerate().fold(acc, |acc, (k, x)| {
-        let (i, j) = match k {
-            0 => (i.overflowing_sub(1).0, j),
-            1 => (i.overflowing_add(1).0, j),
-            2 => (i, j.overflowing_sub(1).0),
-            3 => (i, j.overflowing_add(1).0),
-            _ => unreachable!(),
-        };
-        if x < &9 && !scanned.contains(&(i, j)) {
-            scanned.push((i, j));
-            acc_basin_size(scanned, acc + 1, map, i, j)
-        } else {
-            acc
-        }
-    })
+    [up, down, left, right]
+        .into_iter()
+        .enumerate()
+        .fold(acc, |acc, (k, x)| {
+            let (i, j) = match k {
+                0 => (i.overflowing_sub(1).0, j),
+                1 => (i.overflowing_add(1).0, j),
+                2 => (i, j.overflowing_sub(1).0),
+                3 => (i, j.overflowing_add(1).0),
+                _ => unreachable!(),
+            };
+            if x < &9 && !scanned.contains(&(i, j)) {
+                scanned.push((i, j));
+                acc_basin_size(scanned, acc + 1, map, i, j)
+            } else {
+                acc
+            }
+        })
 }
 
 fn get_directions(map: &[Vec<u32>], i: usize, j: usize) -> (&u32, &u32, &u32, &u32) {
