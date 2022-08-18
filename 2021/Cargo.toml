@@ -14,7 +14,7 @@ anyhow = "1.0.45"
 itertools = "0.10.1"
 
 [build-dependencies]
-loc = "0.5.0"
+loc = { git = "https://github.com/dtomvan/loc" }
 
 [dev-dependencies]
 criterion = "0.3.5"
