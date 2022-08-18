@@ -34,12 +34,16 @@ fn main() -> Result<()> {
             )?;
         }
         "day" => {
+            // TODO: dry I guess
+            let day = args.next().and_then(|x| x.parse().ok());
+            let year = args.next().and_then(|x| x.parse().ok());
+
             let date = Utc::now().with_timezone(&chrono_tz::EST);
-            if date.month() != 12 {
-                bail!("Error: it is not currently December.");
+            if date.month() != 12 && day.is_none() {
+                bail!("Error: it is not currently December and no days have been given.");
             }
-            let day = date.day();
-            let year = date.year();
+            let day = day.unwrap_or_else(|| date.day());
+            let year = year.unwrap_or_else(|| date.year());
             let project_root = project_root(year)?;
             let days_dir = project_root.join("src/days");
             std::fs::create_dir_all(&days_dir).context("Couldn't create days dir")?;
@@ -122,11 +126,7 @@ fn generate_match_days(
         .iter()
         .map(|x| format!("pub mod day{};", x))
         .collect();
-    writeln!(
-        module_file,
-        "{}",
-        day_modules.join("\n")
-    )?;
+    writeln!(module_file, "{}", day_modules.join("\n"))?;
 
     Ok(())
 }
