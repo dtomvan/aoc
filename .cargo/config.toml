@@ -1,0 +1,7 @@
+[alias]
+xtask = "run --release --package xtask --"
+day = "run --release --package xtask -- day"
+2021 = "run --bin aoc-2021 --"
+2022 = "run --bin aoc-2022 --"
+r2021 = "run --release --bin aoc-2021 --"
+r2022 = "run --release --bin aoc-2022 --"
