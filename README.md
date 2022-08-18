@@ -1,8 +1,18 @@
-## AOC 2021
-These are my AoC 2021 solutions, written in rust.
+## Solutions
+Running the solutions:
+```bash
+$ cargo <year> [solution...]
+```
 
-```console
-$ ./target/release/aoc-2021 1 2 3 4 5 6 7 8 9 10 11 12
+### AOC 2022
+These are the coming soon™ solutions to AoC 2022.
+Benchmarks are in benchmarks/2022.md.
+
+### AOC 2021
+These are the solutions I made in 2021. (I only got to 14)
+Benchmarks are in benchmarks/2021.md.
+```bash
+$ ./target/release/aoc-2021 1 2 3 4 5 6 7 8 9 10 11 12 13 14
 
 === Day 01 ===
 Part 1: 1446
@@ -95,107 +105,3 @@ Part 2: 10002813279337
 Took 1035 μs
 Lines of code: 59
 ```
-
-## Benches
-```
-day 1                   time:   [44.486 us 44.582 us 44.697 us]
-Found 11 outliers among 100 measurements (11.00%)
-  6 (6.00%) low severe
-  3 (3.00%) low mild
-  1 (1.00%) high mild
-  1 (1.00%) high severe
-
-day 2                   time:   [47.037 us 47.077 us 47.121 us]
-Found 9 outliers among 100 measurements (9.00%)
-  3 (3.00%) high mild
-  6 (6.00%) high severe
-
-day 3                   time:   [59.928 us 60.003 us 60.079 us]
-Found 13 outliers among 100 measurements (13.00%)
-  1 (1.00%) low mild
-  7 (7.00%) high mild
-  5 (5.00%) high severe
-
-day 4                   time:   [4.6520 ms 4.6575 ms 4.6662 ms]
-Found 9 outliers among 100 measurements (9.00%)
-  3 (3.00%) high mild
-  6 (6.00%) high severe
-
-day 5                   time:   [17.998 ms 18.034 ms 18.090 ms]
-Found 7 outliers among 100 measurements (7.00%)
-  4 (4.00%) high mild
-  3 (3.00%) high severe
-
-day 6                   time:   [6.7490 us 6.7609 us 6.7734 us]
-Found 9 outliers among 100 measurements (9.00%)
-  5 (5.00%) high mild
-  4 (4.00%) high severe
-
-day 7                   time:   [33.610 us 33.635 us 33.664 us]
-                        change: [-98.306% -98.304% -98.302%] (p = 0.00 < 0.05)
-                        Performance has improved.
-Found 8 outliers among 100 measurements (8.00%)
-  1 (1.00%) high mild
-  7 (7.00%) high severe
-
-day 8                   time:   [187.20 us 187.43 us 187.69 us]
-Found 4 outliers among 100 measurements (4.00%)
-  3 (3.00%) high mild
-  1 (1.00%) high severe
-
-day 9                   time:   [1.1859 ms 1.1878 ms 1.1901 ms]
-Found 11 outliers among 100 measurements (11.00%)
-  7 (7.00%) high mild
-  4 (4.00%) high severe
-
-day 10                  time:   [49.207 us 49.325 us 49.479 us]
-Found 7 outliers among 100 measurements (7.00%)
-  7 (7.00%) high severe
-
-day 11                  time:   [1.3536 ms 1.3550 ms 1.3567 ms]
-Found 15 outliers among 100 measurements (15.00%)
-  10 (10.00%) high mild
-  5 (5.00%) high severe
-
-day 12                  time:   [61.687 ms 61.725 ms 61.770 ms]
-Found 18 outliers among 100 measurements (18.00%)
-  10 (10.00%) high mild
-  8 (8.00%) high severe
-
-day 13                  time:   [97.750 us 97.890 us 98.063 us]
-Found 16 outliers among 100 measurements (16.00%)
-  4 (4.00%) high mild
-  12 (12.00%) high severe
-
-day 14                  time:   [1.0032 ms 1.0060 ms 1.0090 ms]
-Found 11 outliers among 100 measurements (11.00%)
-  9 (9.00%) high mild
-  2 (2.00%) high severe
-```
-
-## TODO
-- [x] Day 1
-- [x] Day 2
-- [x] Day 3
-- [x] Day 4
-- [x] Day 5
-- [x] Day 6
-- [x] Day 7
-- [x] Day 8
-- [x] Day 9
-- [x] Day 10
-- [x] Day 11
-- [x] Day 12
-- [x] Day 13
-- [x] Day 14
-- [ ] Day 15
-- [ ] Day 16
-- [ ] Day 17
-- [ ] Day 18
-- [ ] Day 19
-- [ ] Day 20
-- [ ] Day 21
-- [ ] Day 22
-- [ ] Day 23
-- [ ] Day 24
-- [ ] Day 25

@@ -1,24 +1,6 @@
-[package]
-name = "aoc-2021"
-description = "You know the drill, AOC 2021 in Rust."
-authors = [ "Tom van Dijk <129102@dr.nassaucollege.nl>" ]
-version = "0.1.0"
-edition = "2021"
-repository = "https://github.com/dtomvan/aoc-2021"
-keywords = ["advent-of-code"]
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
-[dependencies]
-anyhow = "1.0.45"
-itertools = "0.10.1"
-
-[build-dependencies]
-loc = "0.5.0"
-
-[dev-dependencies]
-criterion = "0.3.5"
-
-[[bench]]
-name = "all_days"
-harness = false
+[workspace]
+members = [
+    "2021",
+    "2022",
+    "xtask",
+]
