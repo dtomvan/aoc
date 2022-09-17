@@ -581,7 +581,7 @@ checksum = "8371e4e5341c3a96db127eb2465ac681ced4c433e01dd0e938adbef26ba93ba5"
 [[package]]
 name = "loc"
 version = "0.6.0"
-source = "git+https://github.com/dtomvan/loc#2f429a95ff5ae20cf4c7eb513f120d7b8cfafb4a"
+source = "git+https://github.com/dtomvan/loc#ed537ad2a909043d5828ad446fd2f80e45f65ff3"
 dependencies = [
  "memchr",
  "smallvec",
