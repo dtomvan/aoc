@@ -1,0 +1,19 @@
+[package]
+name = "aoc_2015"
+version = "0.1.0"
+edition = "2021"
+build = "../../util/common/build.rs"
+homepage = "https://adventofcode.com/2015"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+anyhow = "1.0.62"
+itertools = "0.10.5"
+aoc_common = { path = "../../util/common" }
+
+[build-dependencies]
+loc = { default-features = false, git = "https://github.com/dtomvan/loc" }
+
+[dev-dependencies]
+criterion = "0.3.5"

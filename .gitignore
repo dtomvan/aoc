@@ -1,3 +1,5 @@
-/*/inputs/
-/*/target/
-target
+/crates/*/inputs/
+/crates/*/target/
+/target/
+/crates/xtask/src/TOKEN
+/.idea/
