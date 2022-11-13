@@ -18,22 +18,44 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "98161a4e3e2184da77bb14f02184cdd111e83bbbcc9979dfee3c44b9a85f5602"
 
 [[package]]
-name = "aoc-2021"
+name = "aoc_2015"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "aoc_common",
  "criterion",
  "itertools",
  "loc",
 ]
 
 [[package]]
-name = "aoc-2022"
+name = "aoc_2021"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "aoc_common",
  "criterion",
+ "itertools",
  "loc",
+]
+
+[[package]]
+name = "aoc_2022"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "aoc_common",
+ "criterion",
+ "itertools",
+ "loc",
+]
+
+[[package]]
+name = "aoc_common"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "num-bigint",
 ]
 
 [[package]]
@@ -538,9 +560,9 @@ checksum = "879d54834c8c76457ef4293a689b2a8c59b076067ad77b15efafbb05f92a592b"
 
 [[package]]
 name = "itertools"
-version = "0.10.4"
+version = "0.10.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d8bf247779e67a9082a4790b45e71ac7cfd1321331a5c856a74a9faebdab78d0"
+checksum = "b0fd2260e829bddf4cb6ea802289de2f86d6a7a690192fbe91b3f46e0f2c8473"
 dependencies = [
  "either",
 ]
@@ -645,6 +667,17 @@ dependencies = [
  "security-framework",
  "security-framework-sys",
  "tempfile",
+]
+
+[[package]]
+name = "num-bigint"
+version = "0.4.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f93ab6289c7b344a8a9f60f88d80aa20032336fe78da341afc91c8a2341fc75f"
+dependencies = [
+ "autocfg",
+ "num-integer",
+ "num-traits",
 ]
 
 [[package]]

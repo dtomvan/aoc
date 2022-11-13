@@ -1,6 +1,5 @@
 [workspace]
 members = [
-    "2021",
-    "2022",
-    "xtask",
+    "util/*",
+    "year/*"
 ]
