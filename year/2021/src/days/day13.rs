@@ -37,7 +37,7 @@ pub fn main() -> AocResult {
     dots.dedup();
 
     // TODO: make less stupid
-    let mut dots_fmt = String::new();
+    let mut dots_fmt = String::from('\n');
     for y in 0..=dots.iter().map(|x| x.1).max().unwrap() {
         for x in 0..=dots.iter().map(|x| x.0).max().unwrap() {
             if dots.iter().contains(&(x, y)) {
