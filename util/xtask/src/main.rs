@@ -1,3 +1,4 @@
+use std::env::Args;
 use std::io::Write;
 use std::path::Path;
 use std::{fs::File, path::PathBuf};
@@ -34,17 +35,12 @@ fn main() -> Result<()> {
                 &project_root.join("inputs"),
             )?;
         }
+        "year_dir" => {
+            let (_, year) = date(args);
+            println!("Root of {year}: {}", project_root(year)?.display());
+        }
         "day" => {
-            // TODO: dry I guess
-            let day = args.next().and_then(|x| x.parse().ok());
-            let year = args.next().and_then(|x| x.parse().ok());
-
-            let date = Utc::now().with_timezone(&chrono_tz::EST);
-            if date.month() != 12 && day.is_none() {
-                bail!("Error: it is not currently December and no days have been given.");
-            }
-            let day = day.unwrap_or_else(|| date.day());
-            let year = year.unwrap_or_else(|| date.year());
+            let (day, year) = date(args);
             let project_root = project_root(year)?;
             let days_dir = project_root.join("src/days");
             std::fs::create_dir_all(&days_dir).context("Couldn't create days dir")?;
@@ -83,11 +79,26 @@ pub fn main() -> AocResult {{
     Ok(())
 }
 
+fn date(mut args: impl Iterator<Item = String>) -> (u32, i32) {
+    let day = args.next().and_then(|x| x.parse().ok());
+    let year = args.next().and_then(|x| x.parse().ok());
+
+    let date = Utc::now().with_timezone(&chrono_tz::EST);
+    if date.month() != 12 && day.is_none() {
+        bail!("Error: it is not currently December and no days have been given.");
+    }
+    let day = day.unwrap_or_else(|| date.day());
+    let year = year.unwrap_or_else(|| date.year());
+    (day, year)
+}
+
 fn project_root(year: i32) -> Result<PathBuf> {
     let manifest_root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     Ok(manifest_root
         .parent()
+        .and_then(Path::parent)
         .context("xtask dir should have a parent.")?
+        .join("year")
         .join(year.to_string()))
 }
 
