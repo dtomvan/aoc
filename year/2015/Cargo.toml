@@ -8,12 +8,12 @@ homepage = "https://adventofcode.com/2015"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-anyhow = "1.0.62"
-itertools = "0.10.5"
-aoc_common = { path = "../../util/common" }
+anyhow = { workspace = true }
+itertools = { workspace = true }
+aoc_common = { workspace = true }
 
 [build-dependencies]
-loc = { default-features = false, git = "https://github.com/dtomvan/loc" }
+loc = { workspace = true }
 
 [dev-dependencies]
-criterion = "0.3.5"
+criterion = { workspace = true }

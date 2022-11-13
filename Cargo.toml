@@ -3,3 +3,10 @@ members = [
     "util/*",
     "year/*"
 ]
+
+[workspace.dependencies]
+anyhow = "1.0.62"
+itertools = "0.10.5"
+aoc_common = { path = "./util/common" }
+loc = { default-features = false, git = "https://github.com/dtomvan/loc" }
+criterion = "0.3.5"
