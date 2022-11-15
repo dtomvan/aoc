@@ -1,6 +1,7 @@
 match arg.as_str() {
 	"1" => day1::main,
-	"2" => day2::main,
 	"15" => day15::main,
+	"2" => day2::main,
+	"5" => day5::main,
     _ => unimplemented!(),
 }

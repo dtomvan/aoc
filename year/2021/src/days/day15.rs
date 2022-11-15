@@ -1,4 +1,7 @@
-use aoc_common::{coords, result::{AocResult, done}};
+use aoc_common::{
+    coords::{self, Point},
+    result::{done, AocResult},
+};
 use itertools::Itertools;
 use std::collections::BinaryHeap;
 
@@ -26,9 +29,11 @@ pub fn main() -> AocResult {
             let (x, y) = (i % width, i % height);
 
             for dir in coords::CARDINALS {
-                if let Some(j) =
-                    dir.to_indices((x as isize, y as isize), width as isize, height as isize)
-                {
+                if let Some(j) = dir.to_indices(
+                    Point(x as isize, y as isize),
+                    width as isize,
+                    height as isize,
+                ) {
                     if j != i as isize {
                         adjacent.push(j as usize);
                     }
