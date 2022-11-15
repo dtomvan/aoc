@@ -1,10 +1,9 @@
 use std::{
-    cmp::max,
-    collections::{hash_map::RandomState, HashMap, HashSet, VecDeque},
+    collections::{hash_map::RandomState, BTreeMap, HashSet, VecDeque},
     hash::Hash,
 };
 
-use aoc_common::result::{AocResult, done};
+use aoc_common::result::{done, AocResult};
 use itertools::Itertools;
 
 pub fn main() -> AocResult {
@@ -21,9 +20,16 @@ pub fn main() -> AocResult {
                 .into()
         })
         .collect_vec();
+    let part_1 = part(false, puzzle_input.clone());
+    let part_2 = part(true, puzzle_input);
+    // Part 2
+    done(part_1.score, part_2.score)
+}
+
+fn part(two: bool, input: Vec<Ingredient>) -> ScoredCookie {
     let mut best_cookie = ScoredCookie::default();
     let mut queue = VecDeque::new();
-    let starter_cookie = ScoredCookie::new(Cookie::equal_dist(puzzle_input));
+    let starter_cookie = ScoredCookie::new(Cookie::equal_dist(input));
     queue.push_back(starter_cookie.clone());
     let mut seen: HashSet<_, RandomState> = HashSet::from([starter_cookie.hash()]);
     while let Some(cookie) = queue.pop_back() {
@@ -36,15 +42,17 @@ pub fn main() -> AocResult {
         {
             queue.push_back(not_seen);
         }
-        best_cookie = max(best_cookie, cookie);
+        if cookie > best_cookie && (!two || cookie.calories == 500) {
+            best_cookie = cookie;
+        }
     }
-    // Part 2
-    done(best_cookie.score, ())
+    best_cookie
 }
 
 #[derive(Debug, Default, Clone, PartialEq, Eq)]
-struct ScoredCookie {
+pub struct ScoredCookie {
     score: usize,
+    calories: usize,
     cookie: Cookie,
 }
 
@@ -61,29 +69,29 @@ impl Ord for ScoredCookie {
 }
 
 impl ScoredCookie {
-    fn new(cookie: Cookie) -> Self {
+    pub fn new(cookie: Cookie) -> Self {
+        let (score, calories) = cookie.score();
         Self {
-            score: cookie.score(),
+            score,
+            calories,
             cookie,
         }
     }
 
-    fn hash(&self) -> isize {
-        self.cookie.hash()
+    pub fn hash(&self) -> isize {
+        self.cookie
+            .0
+            .values()
+            .enumerate()
+            .fold(0, |acc, (i, el)| acc | ((el & 0x7F) << (i * 7)))
     }
 }
 
 #[derive(Debug, Default, Clone, PartialEq, Eq)]
-struct Cookie(HashMap<Ingredient, isize>);
+pub struct Cookie(pub BTreeMap<Ingredient, isize>);
 
 impl Cookie {
-    fn hash(&self) -> isize {
-        self.0
-            .values()
-            .enumerate()
-            .fold(0, |acc, (i, el)| acc | (el & 0x7F << (i * 7)))
-    }
-    fn adjacent(&self) -> Vec<Cookie> {
+    pub fn adjacent(&self) -> Vec<Cookie> {
         self.0
             .iter()
             .tuple_combinations()
@@ -99,11 +107,11 @@ impl Cookie {
             .filter(|x| x.0.iter().all(|x| x.1 > &0))
             .collect_vec()
     }
-    fn equal_dist(i: Vec<Ingredient>) -> Self {
+    pub fn equal_dist(i: Vec<Ingredient>) -> Self {
         let eq_dist = 100 / i.len() as isize;
         Self(i.into_iter().map(|x| (x, eq_dist)).collect())
     }
-    fn single_ingredient(&self) -> Ingredient {
+    pub fn single_ingredient(&self) -> Ingredient {
         self.0
             .iter()
             .fold(Ingredient::default(), |acc, (i, p)| Ingredient {
@@ -114,22 +122,25 @@ impl Cookie {
                 calories: acc.calories + i.calories * p,
             })
     }
-    fn score(&self) -> usize {
+    pub fn score(&self) -> (usize, usize) {
         let s = self.single_ingredient();
-        s.capacity.bind_zero()
-            * s.durability.bind_zero()
-            * s.flavor.bind_zero()
-            * s.texture.bind_zero()
+        (
+            s.capacity.bind_zero()
+                * s.durability.bind_zero()
+                * s.flavor.bind_zero()
+                * s.texture.bind_zero(),
+            s.calories.bind_zero(),
+        )
     }
 }
 
 #[derive(Debug, Default, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
-struct Ingredient {
-    capacity: isize,
-    durability: isize,
-    flavor: isize,
-    texture: isize,
-    calories: isize,
+pub struct Ingredient {
+    pub capacity: isize,
+    pub durability: isize,
+    pub flavor: isize,
+    pub texture: isize,
+    pub calories: isize,
 }
 
 impl From<Vec<isize>> for Ingredient {
@@ -152,5 +163,87 @@ trait BindZero: Copy {
 impl BindZero for isize {
     fn bind_zero(self) -> usize {
         self.max(0).unsigned_abs()
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_single_ingredient() {
+        let cookie = Cookie(BTreeMap::from([
+            (
+                Ingredient {
+                    capacity: -1,
+                    durability: -2,
+                    flavor: 6,
+                    texture: 3,
+                    calories: 8,
+                },
+                44,
+            ),
+            (
+                Ingredient {
+                    capacity: 2,
+                    durability: 3,
+                    flavor: -2,
+                    texture: -1,
+                    calories: 3,
+                },
+                56,
+            ),
+        ]));
+        assert_eq!(
+            cookie.single_ingredient(),
+            Ingredient {
+                capacity: 68,
+                durability: 80,
+                flavor: 152,
+                texture: 76,
+                calories: 520,
+            }
+        );
+    }
+
+    #[test]
+    fn test_adjacents() {
+        let starting_cookie = Cookie::equal_dist(vec![
+            Ingredient {
+                capacity: 5,
+                durability: -1,
+                flavor: 0,
+                texture: 0,
+                calories: 5,
+            },
+            Ingredient {
+                capacity: -1,
+                durability: 3,
+                flavor: 0,
+                texture: 0,
+                calories: 1,
+            },
+            Ingredient {
+                capacity: 0,
+                durability: -1,
+                flavor: 4,
+                texture: 0,
+                calories: 6,
+            },
+        ]);
+        itertools::assert_equal(
+            starting_cookie
+                .adjacent()
+                .into_iter()
+                .map(|x| x.0.into_values().collect_vec()),
+            vec![
+                vec![34, 32, 33],
+                vec![32, 34, 33],
+                vec![34, 33, 32],
+                vec![32, 33, 34],
+                vec![33, 34, 32],
+                vec![33, 32, 34],
+            ],
+        );
     }
 }
