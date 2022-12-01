@@ -1,4 +1,4 @@
-use std::fmt::Display;
+use std::{fmt::Display, iter::Sum};
 
 use num_bigint::{BigInt, BigUint};
 
@@ -6,7 +6,10 @@ pub fn done<A: Into<AocD>, B: Into<AocD>>(a: A, b: B) -> AocResult {
     Ok((a.into(), b.into()))
 }
 
-pub fn done_second<A: Into<AocD> + Clone, B: Into<AocD>>(a: A, b: &mut dyn FnMut(A) -> B) -> AocResult {
+pub fn done_second<A: Into<AocD> + Clone, B: Into<AocD>>(
+    a: A,
+    b: &mut dyn FnMut(A) -> B,
+) -> AocResult {
     Ok((a.clone().into(), b(a).into()))
 }
 
@@ -92,3 +95,21 @@ impl From<usize> for AocD {
         Self::Number(v)
     }
 }
+
+/// Self-sum, extension fn to sum to the same type as the input
+pub trait SSum<T: Sum>: Iterator<Item = T>
+where
+    Self: Sized,
+{
+    fn ssum(self) -> T {
+        self.sum()
+    }
+}
+
+macro_rules! ssum_impl {
+    ($($ty:ty),+) => {
+        $(impl<I: Iterator<Item = $ty>> SSum<$ty> for I {})+
+    };
+}
+
+ssum_impl!(usize, u8, u16, u32, u64, isize, i8, i16, i32, i64, f32, f64);

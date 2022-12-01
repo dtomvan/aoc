@@ -287,3 +287,24 @@ impl<T> Deref for TrimmedCommaSep<T> {
         &self.0
     }
 }
+
+pub fn double_split(
+    s: &'static str,
+    first: &'static str,
+    second: &'static str,
+) -> impl Iterator<Item = impl Iterator<Item = &'static str>> {
+    s.split(first).map(move |x| x.split(second))
+}
+
+pub fn double_split_ws(
+    s: &'static str,
+    first: &'static str,
+) -> impl Iterator<Item = impl Iterator<Item = &'static str>> {
+    s.split(first).map(move |x| x.split_whitespace())
+}
+
+pub fn double_split_grouped(
+    s: &'static str,
+) -> impl Iterator<Item = impl Iterator<Item = &'static str>> {
+    s.split("\n\n").map(move |x| x.split_whitespace())
+}
