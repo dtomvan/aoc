@@ -65,7 +65,7 @@ pub fn main() -> AocResult {{
             let client = Client::new();
             let res = client
                 .get(format!("https://adventofcode.com/{year}/day/{day}/input"))
-                .header("Cookie", format!("session={SESSION_ID}"))
+                .header(reqwest::header::COOKIE, format!("session={SESSION_ID}").trim())
                 .send()?
                 .text()?;
             let mut day_input = File::create(inputs_dir.join(format!("day-{day}.txt")))?;
