@@ -1,4 +1,4 @@
-#![feature(drain_filter, let_chains, iterator_try_collect, hash_set_entry)]
+#![feature(iter_next_chunk, drain_filter, let_chains, iterator_try_collect, hash_set_entry)]
 use std::{collections::HashMap, time::Instant};
 
 mod days;

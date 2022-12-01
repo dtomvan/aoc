@@ -6,6 +6,10 @@ pub fn done<A: Into<AocD>, B: Into<AocD>>(a: A, b: B) -> AocResult {
     Ok((a.into(), b.into()))
 }
 
+pub fn done_second<A: Into<AocD> + Clone, B: Into<AocD>>(a: A, b: &mut dyn FnMut(A) -> B) -> AocResult {
+    Ok((a.clone().into(), b(a).into()))
+}
+
 pub type AocResult = anyhow::Result<(AocD, AocD)>;
 
 #[derive(Default, Debug, Clone)]
