@@ -6,13 +6,33 @@ $ cargo <year> [solution...]
 
 ### AOC 2022
 These are the coming soon™ solutions to AoC 2022.
-Benchmarks are in benchmarks/2022.md.
+Benchmarks will be in benchmarks/2022.md.
+```
+$ ./target/release/aoc_2022
+##############
+## aoc_2022 ##
+##############
+
+=== Day 01 ===
+From https://adventofcode.com/2022/day/1
+Part 1: 68923
+Part 2: 200044
+Took 63 μs
+Lines of code: 14
+
+=== Day 02 ===
+From https://adventofcode.com/2022/day/2
+Part 1: 15632
+Part 2: 14416
+Took 170 μs
+Lines of code: 37
+```
 
 ### AOC 2021
 These are the solutions I made in 2021. (I only got to 14)
 Benchmarks are in benchmarks/2021.md.
 ```bash
-$ ./target/release/aoc-2021 1 2 3 4 5 6 7 8 9 10 11 12 13 14
+$ ./target/release/aoc_2021 1 2 3 4 5 6 7 8 9 10 11 12 13 14
 
 === Day 01 ===
 Part 1: 1446
