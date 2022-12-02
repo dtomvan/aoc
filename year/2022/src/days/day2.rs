@@ -6,32 +6,29 @@ pub fn main() -> AocResult {
     let input = include_str!("../../inputs/day-2.txt")
         .lines()
         .filter_map(|x| x.split_whitespace().collect_tuple())
+        .map(|(y, m)| (y.as_bytes()[0] - 64, m.as_bytes()[0] - 87))
         .collect_vec();
-    let part1 = input.iter().fold(0usize, |acc, x| {
-        acc + match x {
-            ("A", "X") => 4,
-            ("A", "Y") => 8,
-            ("A", "Z") => 3,
-            ("B", "X") => 1,
-            ("B", "Y") => 5,
-            ("B", "Z") => 9,
-            ("C", "X") => 7,
-            ("C", "Y") => 2,
-            ("C", "Z") => 6,
-            _ => 0,
-        }
+    // Explanation: first add your play, then check if you draw or win. In any other case you lose,
+    // so we can just skip those and add 0.
+    let part1 = input.iter().fold(0usize, |acc, (y, m)| {
+        acc + *m as usize
+            + match (y, m) {
+                (1, 1) | (2, 2) | (3, 3) => 3,
+                (1, 2) | (2, 3) | (3, 1) => 6,
+                _ => 0,
+            }
     });
-    let part2 = input.iter().fold(0usize, |acc, x| {
-        acc + match x {
-            ("A", "X") => 3,
-            ("A", "Y") => 4,
-            ("A", "Z") => 8,
-            ("B", "X") => 1,
-            ("B", "Y") => 5,
-            ("B", "Z") => 9,
-            ("C", "X") => 2,
-            ("C", "Y") => 6,
-            ("C", "Z") => 7,
+    // Explanation: wether you win or lose is a given, so you can just add that immediately
+    // then you need to find out how you need to play in order to do that, and add 1, 2 or 3
+    let part2 = input.iter().fold(0usize, |acc, (y, m)| {
+        acc + match m {
+            2 => 3,
+            3 => 6,
+            _ => 0,
+        } + match (y, m) {
+            (2, 1) | (1, 2) | (3, 3) => 1,
+            (3, 1) | (2, 2) | (1, 3) => 2,
+            (1, 1) | (3, 2) | (2, 3) => 3,
             _ => 0,
         }
     });
