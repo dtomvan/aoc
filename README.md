@@ -24,8 +24,8 @@ Lines of code: 14
 From https://adventofcode.com/2022/day/2
 Part 1: 15632
 Part 2: 14416
-Took 170 μs
-Lines of code: 37
+Took 121 μs
+Lines of code: 30
 ```
 
 ### AOC 2021
