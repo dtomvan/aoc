@@ -1,14 +1,18 @@
 ## Solutions
 Running the solutions:
 ```bash
+# debug build
 $ cargo <year> [solution...]
+# release build
+$ cargo r<year> [solution...]
 ```
 
 ### AOC 2022
 These are the coming soon™ solutions to AoC 2022.
 Benchmarks will be in benchmarks/2022.md.
-```
-$ ./target/release/aoc_2022
+```bash
+$ cargo r2022 1 2
+
 ##############
 ## aoc_2022 ##
 ##############
@@ -32,7 +36,7 @@ Lines of code: 30
 These are the solutions I made in 2021. (I only got to 14)
 Benchmarks are in benchmarks/2021.md.
 ```bash
-$ ./target/release/aoc_2021 1 2 3 4 5 6 7 8 9 10 11 12 13 14
+$ cargo r2021 1 2 3 4 5 6 7 8 9 10 11 12 13 14
 
 === Day 01 ===
 Part 1: 1446
@@ -107,6 +111,9 @@ Took 63542 μs
 Lines of code: 39
 
 === Day 13 ===
+From https://adventofcode.com/2021/day/13
+Part 1: 664
+Part 2:
 #### ####   ## #  # #### #    ###  #
 #    #       # # #     # #    #  # #
 ###  ###     # ##     #  #    ###  #
@@ -114,9 +121,7 @@ Lines of code: 39
 #    #    #  # # #  #    #    #  # #
 #### #     ##  #  # #### #### ###  ####
 
-Part 1: 664
-Part 2: 0
-Took 442 μs
+Took 192 μs
 Lines of code: 68
 
 === Day 14 ===
