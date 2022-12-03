@@ -9,7 +9,7 @@ $ cargo r<year> [solution...]
 
 ### AOC 2022
 These are the coming soon™ solutions to AoC 2022.
-Benchmarks will be in benchmarks/2022.md.
+Benchmarks: [here](benchmarks/2022.md).
 ```bash
 $ cargo r2022 1 2
 
@@ -41,7 +41,7 @@ Lines of code: 26
 
 ### AOC 2021
 These are the solutions I made in 2021. (I only got to 14)
-Benchmarks are in benchmarks/2021.md.
+Benchmarks: [here](benchmarks/2021.md).
 ```bash
 $ cargo r2021 1 2 3 4 5 6 7 8 9 10 11 12 13 14
 
