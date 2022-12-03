@@ -36,7 +36,7 @@ From https://adventofcode.com/2022/day/3
 Part 1: 7742
 Part 2: 2276
 Took 95 μs
-Lines of code: 35
+Lines of code: 26
 ```
 
 ### AOC 2021
