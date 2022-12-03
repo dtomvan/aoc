@@ -12,7 +12,7 @@ build = "../../util/common/build.rs"
 [dependencies]
 anyhow = { workspace = true }
 itertools = { workspace = true }
-aoc_common = { workspace = true }
+aoc_common = { path = "../../util/common" }
 
 [build-dependencies]
 loc = { workspace = true }
