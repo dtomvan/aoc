@@ -1,38 +1,31 @@
 use aoc_common::result::{done, AocResult, SSum};
-use itertools::Itertools;
 
 pub fn main() -> AocResult {
-    let input = include_str!("../../inputs/day-3.txt");
-    let prioritize = |x: char| {
-        if x.is_uppercase() {
-            x as u16 - 38
-        } else {
-            x as u16 - 96
-        }
+    let input = include_str!("../../inputs/day-3.txt")
+        .lines()
+        .map(str::as_bytes);
+
+    let score = |x: &u8| match x.is_ascii_uppercase() {
+        true => *x as u16 - 38,
+        _ => *x as u16 - 96,
     };
 
     // Part 1
     let part_1 = input
-        .lines()
+        .clone()
         .filter_map(|x| {
-            let middle = x.len() / 2;
-            let first = &x[..middle];
-            let second = &x[middle..];
-            first.chars().find(|x| second.contains(*x)).map(prioritize)
+            let (f, s) = x.split_at(x.len() / 2);
+            f.iter().find(|x| s.contains(*x)).map(score)
         })
         .ssum();
 
     // Part 2
     let part_2 = input
-        .lines()
-        .chunks(3)
-        .into_iter()
-        .filter_map(|x| {
-            x.collect_tuple().and_then(|(f, s, t)| {
-                f.chars()
-                    .find(|x| s.contains(*x) && t.contains(*x))
-                    .map(prioritize)
-            })
+        .array_chunks()
+        .filter_map(|[f, s, t]| {
+            f.iter()
+                .find(|x| s.contains(*x) && t.contains(*x))
+                .map(score)
         })
         .ssum();
 
