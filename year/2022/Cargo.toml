@@ -17,3 +17,7 @@ loc = { workspace = true }
 
 [dev-dependencies]
 criterion = { workspace = true }
+
+[[bench]]
+name = "2022"
+harness = false
