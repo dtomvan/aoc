@@ -19,6 +19,7 @@ pub type AocResult = anyhow::Result<(AocD, AocD)>;
 pub enum AocD {
     #[default]
     Nothing,
+    U16(u16),
     Number(usize),
     ULong(BigUint),
     Integer(isize),
@@ -32,6 +33,7 @@ impl Display for AocD {
         use AocD::*;
         match self {
             Nothing => write!(f, "TODO"),
+            U16(n) => write!(f, "{n}"),
             Integer(n) => write!(f, "{n}"),
             Long(n) => write!(f, "{n}"),
             Number(n) => write!(f, "{n}"),
@@ -51,6 +53,12 @@ impl Display for AocD {
                 write!(f, "]")
             }
         }
+    }
+}
+
+impl From<u16> for AocD {
+    fn from(v: u16) -> Self {
+        Self::U16(v)
     }
 }
 

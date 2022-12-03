@@ -21,15 +21,22 @@ $ cargo r2022 1 2
 From https://adventofcode.com/2022/day/1
 Part 1: 68923
 Part 2: 200044
-Took 63 μs
+Took 53 μs
 Lines of code: 14
 
 === Day 02 ===
 From https://adventofcode.com/2022/day/2
 Part 1: 15632
 Part 2: 14416
-Took 121 μs
+Took 112 μs
 Lines of code: 30
+
+=== Day 03 ===
+From https://adventofcode.com/2022/day/3
+Part 1: 7742
+Part 2: 2276
+Took 95 μs
+Lines of code: 35
 ```
 
 ### AOC 2021
