@@ -1,5 +1,6 @@
 use aoc_common::{
     coords::{self, Point},
+    parse,
     result::{done, AocResult},
 };
 use itertools::Itertools;
@@ -8,11 +9,7 @@ use std::collections::BinaryHeap;
 pub fn main() -> AocResult {
     let input = include_str!("../../inputs/day-15.test")
         .lines()
-        .map(|x| {
-            x.split("")
-                .filter_map(|y| y.parse::<u8>().ok())
-                .collect_vec()
-        })
+        .map(|x| x.split_whitespace().flat_map(parse!(u8)).collect_vec())
         .collect_vec();
 
     let width = input[0].len();

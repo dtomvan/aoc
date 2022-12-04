@@ -1,11 +1,11 @@
-use aoc_common::result::{done, AocResult};
+use aoc_common::{result::{done, AocResult}, parse};
 use itertools::Itertools;
 
 pub fn main() -> AocResult {
     let mut input = include_str!("../../inputs/day-7.txt")
         .trim()
         .split(',')
-        .filter_map(|x| x.parse::<isize>().ok())
+        .filter_map(parse!(isize))
         .collect_vec();
 
     input.sort_unstable();

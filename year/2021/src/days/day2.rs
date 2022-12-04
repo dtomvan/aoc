@@ -1,4 +1,4 @@
-use aoc_common::result::{AocResult, done};
+use aoc_common::result::{done, AocResult};
 use itertools::Itertools;
 
 pub fn main() -> AocResult {

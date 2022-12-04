@@ -14,7 +14,7 @@ pub fn main() -> AocResult {
         .map(|i| find_most_common(&numbers, i) << i)
         .sum::<usize>();
 
-    // 0xFF is just 12 bits
+    // 0xFFF is just 12 bits
     let least_common = !most_common & 0xFFF;
 
     // Part 2

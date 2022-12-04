@@ -1,6 +1,9 @@
 use std::collections::HashSet;
 
-use aoc_common::result::{done, AocResult};
+use aoc_common::{
+    parse,
+    result::{done, AocResult},
+};
 use itertools::Itertools;
 
 pub fn main() -> AocResult {
@@ -10,7 +13,7 @@ pub fn main() -> AocResult {
         .lines()
         .map(|x| {
             x.bytes()
-                .filter_map(|x| std::str::from_utf8(&[x]).unwrap().parse::<isize>().ok())
+                .filter_map(|x| std::str::from_utf8(&[x]).ok().and_then(parse!()))
                 .collect_vec()
         })
         .collect_vec();

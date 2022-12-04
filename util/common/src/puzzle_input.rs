@@ -308,3 +308,13 @@ pub fn double_split_grouped(
 ) -> impl Iterator<Item = impl Iterator<Item = &'static str>> {
     s.split("\n\n").map(move |x| x.split_whitespace())
 }
+
+#[macro_export]
+macro_rules! parse {
+    ($type:ty) => {
+        |x| x.parse::<$type>().ok()
+    };
+    () => {
+        |x| x.parse().ok()
+    };
+}

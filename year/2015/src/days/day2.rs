@@ -1,4 +1,7 @@
-use aoc_common::result::{AocResult, done};
+use aoc_common::{
+    parse,
+    result::{done, AocResult},
+};
 use itertools::Itertools;
 
 pub fn main() -> AocResult {
@@ -8,7 +11,7 @@ pub fn main() -> AocResult {
         .lines()
         .map(|line| {
             line.splitn(3, 'x')
-                .filter_map(|x| x.parse::<usize>().ok())
+                .filter_map(parse!(usize))
                 .collect_tuple()
                 .expect("Incorrect puzzle input")
         })
