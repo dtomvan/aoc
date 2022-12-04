@@ -22,7 +22,7 @@ fn main() {
 
     let dest_path = Path::new(&out_dir).join("loc.rs");
     fs::write(
-        &dest_path,
+        dest_path,
         format!(
             "const PAIRS: [(&str, u32); {}] = {:?};",
             map.len(),

@@ -121,7 +121,7 @@ fn generate_match_days(days_dir: &Path, project_root: &Path, inputs_dir: &Path) 
     day_module_names.sort_unstable();
     let day_matchers: Vec<_> = day_module_names
         .iter()
-        .map(|x| format!(r#"	"{}" => day{}::main,"#, x, x))
+        .map(|x| format!(r#"	"{x}" => day{x}::main,"#))
         .collect();
 
     let mut match_days = File::create(project_root.join("src/_match_days.rs"))?;
@@ -139,7 +139,7 @@ fn generate_match_days(days_dir: &Path, project_root: &Path, inputs_dir: &Path) 
     let mut module_file = File::create(project_root.join("src/days/mod.rs"))?;
     let day_modules: Vec<_> = day_module_names
         .iter()
-        .map(|x| format!("pub mod day{};", x))
+        .map(|x| format!("pub mod day{x};"))
         .collect();
     writeln!(module_file, "{}", day_modules.join("\n"))?;
 

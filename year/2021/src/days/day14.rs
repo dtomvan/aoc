@@ -12,7 +12,7 @@ pub fn main() -> AocResult {
         .chars()
         .tuple_windows()
         .fold(HashMap::new(), |mut acc, (a, b)| {
-            *acc.entry(format!("{}{}", a, b)).or_insert(0) += 1;
+            *acc.entry(format!("{a}{b}")).or_insert(0) += 1;
             acc
         });
 
@@ -44,7 +44,7 @@ fn step_amount(
                     inst_result.push(inst.1.chars().next().unwrap());
                     inst_result.push(f.next().unwrap());
                     for (a, b) in inst_result.chars().tuple_windows() {
-                        *temp.entry(format!("{}{}", a, b)).or_insert(0) += *poly;
+                        *temp.entry(format!("{a}{b}")).or_insert(0) += *poly;
                     }
                 }
             }

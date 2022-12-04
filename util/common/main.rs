@@ -25,11 +25,10 @@ fn main() -> anyhow::Result<()> {
         let elapsed = instant.elapsed().as_micros();
 
         if let Ok((part_1, part_2)) = result {
-            println!("Part 1: {}\nPart 2: {}", part_1, part_2);
-            println!("Took {} μs", elapsed);
+            println!("Part 1: {part_1}\nPart 2: {part_2}\nTook {elapsed} μs");
 
-            let lines = loc.get(format!("day{}.rs", arg).as_str()).unwrap();
-            println!("Lines of code: {}", lines);
+            let lines = loc.get(format!("day{arg}.rs").as_str()).unwrap();
+            println!("Lines of code: {lines}");
         } else {
             eprintln!("Error: {}", result.unwrap_err());
         }

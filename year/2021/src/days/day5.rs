@@ -16,7 +16,7 @@ pub fn main() -> AocResult {
     done(solve(&input, true), solve(&input, false))
 }
 
-fn solve(points: &Vec<(i32, i32, i32, i32)>, straight: bool) -> usize {
+fn solve(points: &[(i32, i32, i32, i32)], straight: bool) -> usize {
     points
         .iter()
         .filter(|(x1, y1, x2, y2)| !straight || x1 == x2 || y1 == y2)
