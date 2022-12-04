@@ -37,6 +37,13 @@ Part 1: 7742
 Part 2: 2276
 Took 95 μs
 Lines of code: 26
+
+=== Day 04 ===
+From https://adventofcode.com/2022/day/4
+Part 1: 602
+Part 2: 891
+Took 328 μs
+Lines of code: 25
 ```
 
 ### AOC 2021
