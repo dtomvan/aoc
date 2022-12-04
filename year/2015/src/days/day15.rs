@@ -3,14 +3,15 @@ use std::{
     hash::Hash,
 };
 
-use aoc_common::result::{done, AocResult};
+use aoc_common::{
+    lines,
+    result::{done, AocResult},
+};
 use itertools::Itertools;
 
 pub fn main() -> AocResult {
     // Part 1
-    let input = include_str!("../../inputs/day-15.txt");
-    let puzzle_input = input
-        .lines()
+    let input = lines!("../../inputs/day-15.txt")
         .map(|x| {
             x.split_whitespace()
                 .skip(2)
@@ -20,8 +21,8 @@ pub fn main() -> AocResult {
                 .into()
         })
         .collect_vec();
-    let part_1 = part(false, puzzle_input.clone());
-    let part_2 = part(true, puzzle_input);
+    let part_1 = part(false, input.clone());
+    let part_2 = part(true, input);
     // Part 2
     done(part_1.score, part_2.score)
 }

@@ -318,3 +318,10 @@ macro_rules! parse {
         |x| x.parse().ok()
     };
 }
+
+#[macro_export]
+macro_rules! lines {
+    ($file:literal) => {
+        include_str!($file).lines()
+    };
+}

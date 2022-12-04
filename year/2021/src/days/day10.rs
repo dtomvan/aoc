@@ -1,13 +1,14 @@
-use aoc_common::result::{AocResult, done};
+use aoc_common::{
+    lines,
+    result::{done, AocResult},
+};
 
 pub fn main() -> AocResult {
-    let input = include_str!("../../inputs/day-10.txt");
-
     let mut part_1 = 0usize;
     let mut part_2 = Vec::new();
 
-    'outer: for line in input.lines() {
-        let mut brackets = Vec::with_capacity(line.len());
+    'outer: for line in lines!("../../inputs/day-10.txt") {
+        let mut brackets = Vec::new();
         for x in line.chars() {
             if let ')' | ']' | '}' | '>' = x {
                 if let Some(y) = brackets.pop() {
@@ -29,20 +30,18 @@ pub fn main() -> AocResult {
             }
         }
 
-        let mut total_points = 0usize;
-        for bracket in brackets.into_iter().rev() {
-            let score = match bracket {
-                '(' => 1,
-                '[' => 2,
-                '{' => 3,
-                '<' => 4,
-                _ => unreachable!(),
-            };
-
-            total_points = (total_points * 5) + score;
-        }
-        part_2.push(total_points);
+        part_2.push(brackets.into_iter().rev().fold(0usize, |acc, bracket| {
+            (acc * 5)
+                + match bracket {
+                    '(' => 1,
+                    '[' => 2,
+                    '{' => 3,
+                    '<' => 4,
+                    _ => unreachable!(),
+                }
+        }));
     }
+
     part_2.sort_unstable();
 
     done(part_1, part_2[part_2.len() / 2])

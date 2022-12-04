@@ -1,12 +1,12 @@
-use aoc_common::result::{AocResult, done};
+use aoc_common::{
+    lines,
+    result::{done, AocResult},
+};
 use itertools::Itertools;
 
 pub fn main() -> AocResult {
-    let input = include_str!("../../inputs/day-9.txt");
-    // NOTICE: You index like [y][x], not [x][y]
-    let map = input
-        .lines()
-        .map(|x| x.chars().filter_map(|y| y.to_digit(10)).collect_vec())
+    let map = lines!("../../inputs/day-9.txt")
+        .map(|x| x.chars().flat_map(|y| y.to_digit(10)).collect_vec())
         .collect_vec();
     let mut low_indices = Vec::new();
     let mut part_1 = 0;

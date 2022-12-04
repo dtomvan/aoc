@@ -1,14 +1,13 @@
-use aoc_common::parse;
 use aoc_common::result::{done, AocResult};
+use aoc_common::{lines, parse};
 use itertools::Itertools;
 
 pub fn main() -> AocResult {
     // Part 2
-    let part2 = include_str!("../../inputs/day-4.txt")
-        .lines()
+    let part2 = lines!("../../inputs/day-4.txt")
         .filter_map(|x| {
-            x.splitn(2, ',')
-                .flat_map(|x| x.splitn(2, '-').flat_map(parse!(usize)))
+            x.splitn(4, ['-', ','])
+                .flat_map(parse!(usize))
                 .collect_tuple()
         })
         .filter(|(f1, f2, s1, s2)| !(f2 < s1 || s2 < f1))
@@ -17,8 +16,7 @@ pub fn main() -> AocResult {
     // Part 1
     let part1 = part2
         .iter()
-        .filter(|(f1, f2, s1, s2)| (f1 <= s1 && f2 >= s2) || (s1 <= f1 && s2 >= f2))
-        .count();
+        .filter(|(f1, f2, s1, s2)| (f1 <= s1 && f2 >= s2) || (s1 <= f1 && s2 >= f2));
 
-    done(part1, part2.len())
+    done(part1.count(), part2.len())
 }

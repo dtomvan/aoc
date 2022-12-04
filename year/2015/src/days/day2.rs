@@ -1,20 +1,13 @@
 use aoc_common::{
-    parse,
+    lines, parse,
     result::{done, AocResult},
 };
 use itertools::Itertools;
 
 pub fn main() -> AocResult {
     // Part 1
-    let input = include_str!("../../inputs/day-2.txt");
-    let input: Vec<(_, _, _)> = input
-        .lines()
-        .map(|line| {
-            line.splitn(3, 'x')
-                .filter_map(parse!(usize))
-                .collect_tuple()
-                .expect("Incorrect puzzle input")
-        })
+    let input: Vec<(_, _, _)> = lines!("../../inputs/day-2.txt")
+        .filter_map(|line| line.splitn(3, 'x').flat_map(parse!(usize)).collect_tuple())
         .collect();
     let part1 = input.iter().fold(0, |n, (l, w, h)| {
         let b_t = l * w;

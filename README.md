@@ -52,95 +52,112 @@ Benchmarks: [here](benchmarks/2021.md).
 ```bash
 $ cargo r2021 1 2 3 4 5 6 7 8 9 10 11 12 13 14
 
+##############
+## aoc_2021 ##
+##############
+
 === Day 01 ===
+From https://adventofcode.com/2021/day/1
 Part 1: 1446
 Part 2: 1486
-Took 110 μs
-Lines of code: 13
+Took 46 μs
+Lines of code: 14
 
 === Day 02 ===
+From https://adventofcode.com/2021/day/2
 Part 1: 2019945
 Part 2: 1599311480
-Took 121 μs
-Lines of code: 22
+Took 62 μs
+Lines of code: 23
 
 === Day 03 ===
+From https://adventofcode.com/2021/day/3
 Part 1: 3958484
 Part 2: 1613181
-Took 209 μs
-Lines of code: 38
+Took 57 μs
+Lines of code: 39
 
 === Day 04 ===
+From https://adventofcode.com/2021/day/4
 Part 1: 32844
 Part 2: 4920
-Took 7215 μs
-Lines of code: 122
+Took 3485 μs
+Lines of code: 123
 
 === Day 05 ===
+From https://adventofcode.com/2021/day/5
 Part 1: 4655
 Part 2: 20500
-Took 34462 μs
-Lines of code: 38
-
-=== Day 06 ===
-Part 1: 383160
-Part 2: 1721148811504
-Took 23 μs
-Lines of code: 26
-
-=== Day 07 ===
-Part 1: 343605
-Part 2: 96744904
-Took 134 μs
-Lines of code: 20
-
-=== Day 08 ===
-Part 1: 409
-Part 2: 1024649
-Took 589 μs
-Lines of code: 48
-
-=== Day 09 ===
-Part 1: 475
-Part 2: 1092012
-Took 3147 μs
-Lines of code: 53
-
-=== Day 10 ===
-Part 1: 318081
-Part 2: 4361305341
-Took 178 μs
+Took 21187 μs
 Lines of code: 42
 
+=== Day 06 ===
+From https://adventofcode.com/2021/day/6
+Part 1: 383160
+Part 2: 1721148811504
+Took 5 μs
+Lines of code: 27
+
+=== Day 07 ===
+From https://adventofcode.com/2021/day/7
+Part 1: 343605
+Part 2: 96744904
+Took 57 μs
+Lines of code: 22
+
+=== Day 08 ===
+From https://adventofcode.com/2021/day/8
+Part 1: 409
+Part 2: 1024649
+Took 209 μs
+Lines of code: 46
+
+=== Day 09 ===
+From https://adventofcode.com/2021/day/9
+Part 1: 475
+Part 2: 1092012
+Took 1544 μs
+Lines of code: 66
+
+=== Day 10 ===
+From https://adventofcode.com/2021/day/10
+Part 1: 318081
+Part 2: 4361305341
+Took 86 μs
+Lines of code: 43
+
 === Day 11 ===
+From https://adventofcode.com/2021/day/11
 Part 1: 1669
 Part 2: 351
-Took 2877 μs
-Lines of code: 78
+Took 1358 μs
+Lines of code: 82
 
 === Day 12 ===
+From https://adventofcode.com/2021/day/12
 Part 1: 4241
 Part 2: 122134
-Took 63542 μs
-Lines of code: 39
+Took 74092 μs
+Lines of code: 40
 
 === Day 13 ===
 From https://adventofcode.com/2021/day/13
 Part 1: 664
-Part 2:
-#### ####   ## #  # #### #    ###  #
-#    #       # # #     # #    #  # #
-###  ###     # ##     #  #    ###  #
-#    #       # # #   #   #    #  # #
-#    #    #  # # #  #    #    #  # #
+Part 2: 
+#### ####   ## #  # #### #    ###  #   
+#    #       # # #     # #    #  # #   
+###  ###     # ##     #  #    ###  #   
+#    #       # # #   #   #    #  # #   
+#    #    #  # # #  #    #    #  # #   
 #### #     ##  #  # #### #### ###  ####
 
-Took 192 μs
+Took 159 μs
 Lines of code: 68
 
 === Day 14 ===
+From https://adventofcode.com/2021/day/14
 Part 1: 2851
 Part 2: 10002813279337
-Took 1035 μs
-Lines of code: 59
+Took 1052 μs
+Lines of code: 57
 ```

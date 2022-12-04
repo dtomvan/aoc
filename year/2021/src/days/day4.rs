@@ -1,20 +1,21 @@
 use std::str::FromStr;
 
-use aoc_common::result::{AocResult, done};
+use aoc_common::{
+    parse,
+    result::{done, AocResult},
+};
+use itertools::Itertools;
 
 pub fn main() -> AocResult {
-    let input = include_str!("../../inputs/day-4.txt");
-    let mut input = input.split("\n\n");
+    let mut input = include_str!("../../inputs/day-4.txt").split("\n\n");
 
     let draws: Vec<usize> = input
         .next()
         .unwrap()
         .split(',')
-        .filter_map(|x| x.parse().ok())
+        .filter_map(parse!())
         .collect();
-    let mut boards = input
-        .map(|x| Board::from_str(x).unwrap())
-        .collect::<Vec<_>>();
+    let mut boards = input.filter_map(parse!(Board)).collect_vec();
 
     let mut part_1 = None;
     let mut part_2 = None;
@@ -24,7 +25,8 @@ pub fn main() -> AocResult {
                 .iter_mut()
                 .filter(|x| x.has(draw))
                 .for_each(Cell::fill);
-            if board.won() {
+            let won = board.won();
+            if won {
                 let score = draw
                     * board
                         .iter()
@@ -38,10 +40,8 @@ pub fn main() -> AocResult {
                         .sum::<usize>();
                 part_1.get_or_insert(score);
                 let _ = part_2.insert(score);
-                true
-            } else {
-                false
             }
+            won
         });
     }
 

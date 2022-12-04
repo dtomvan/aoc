@@ -1,27 +1,26 @@
-use aoc_common::result::{done, AocResult};
+use aoc_common::{
+    lines,
+    result::{done, AocResult, SSum},
+};
 use itertools::Itertools;
 
 pub fn main() -> AocResult {
-    let input = include_str!("../../inputs/day-8.txt");
-
-    let parsed_input = input
-        .lines()
-        .map(|x| x.split(" | ").collect_tuple::<(_, _)>().unwrap())
+    let input = lines!("../../inputs/day-8.txt")
+        .filter_map(|x| x.split(" | ").collect_tuple())
         .collect_vec();
 
-    let part_1: usize = parsed_input
+    let part_1 = input
         .iter()
-        .map(|x| {
-            x.1.split_whitespace()
+        .map(|(_, x)| {
+            x.split_whitespace()
                 .map(|x| x.len())
-                // 1 4 7 8
                 .filter(|&x| x == 2 || x == 4 || x == 3 || x == 7)
                 .count()
         })
-        .sum();
+        .ssum();
 
-    let mut sum = 0usize;
-    for (inp, outp) in parsed_input {
+    let mut part_2 = 0usize;
+    for (inp, outp) in input {
         let inp = inp.split_whitespace().collect_vec();
         let one = inp.iter().find(|x| x.len() == 2).unwrap();
         let four = inp.iter().find(|x| x.len() == 4).unwrap();
@@ -40,12 +39,12 @@ pub fn main() -> AocResult {
                 (6, _, 3) => 0,
                 _ => panic!("Unexpected 7-seg digit"),
             };
-            sum += num * acc;
+            part_2 += num * acc;
             acc / 10
         });
     }
 
-    done(part_1, sum)
+    done(part_1, part_2)
 }
 
 fn common_with(input: &str, str: &str) -> usize {
