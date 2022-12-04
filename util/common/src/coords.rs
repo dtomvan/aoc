@@ -1,9 +1,63 @@
+use derive_more::{
+    Add, AddAssign, BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, Div, DivAssign,
+    From, Mul, MulAssign, Neg, Not, Product, Rem, RemAssign, Shl, ShlAssign, Shr, ShrAssign, Sub,
+    SubAssign, Sum,
+};
+use std::ops::{Add, Mul, Div, MulAssign, DivAssign};
+
 pub use self::Direction::*;
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(
+    Clone,
+    Copy,
+    Debug,
+    Eq,
+    Ord,
+    PartialEq,
+    PartialOrd,
+    Add,
+    AddAssign,
+    BitAnd,
+    BitAndAssign,
+    BitOr,
+    BitOrAssign,
+    BitXor,
+    BitXorAssign,
+    Div,
+    DivAssign,
+    From,
+    Mul,
+    MulAssign,
+    Neg,
+    Not,
+    Product,
+    Rem,
+    RemAssign,
+    Shl,
+    ShlAssign,
+    Shr,
+    ShrAssign,
+    Sub,
+    SubAssign,
+    Sum,
+)]
+#[mul(forward)]
 pub struct Point(pub isize, pub isize);
+
 pub const CARDINALS: [Direction; 4] = [North, West, South, East];
 pub const DIAGONALS: [Direction; 4] = [NorthWest, NorthEast, SouthWest, SouthEast];
+
+impl Point {
+    pub fn adj(self) -> impl Iterator<Item = Self> + 'static {
+        get_all_adjacents().map(move |x| self + x)
+    }
+    pub fn cardinal_adj(self) -> impl Iterator<Item = Self> + 'static {
+        DIAGONALS.into_iter().map(move |x| self + x)
+    }
+    pub fn diagonal_adj(self) -> impl Iterator<Item = Self> + 'static {
+        DIAGONALS.into_iter().map(move |x| self + x)
+    }
+}
 
 #[derive(Debug)]
 pub enum Direction {
@@ -19,23 +73,52 @@ pub enum Direction {
     SouthEast,
 }
 
-impl Point {
-    pub fn adj(&self) -> impl Iterator<Item = Self> + '_ {
-        get_all_adjacents().map(|x| x.apply(self))
+impl Add<Direction> for Point {
+    type Output = Point;
+
+    fn add(self, d: Direction) -> Self::Output {
+        let Point(x, y) = self;
+        let Point(dx, dy) = d.to_tuple();
+        Point(x + dx, y + dy)
     }
-    pub fn cardinal_adj(&self) -> impl Iterator<Item = Self> + '_ {
-        DIAGONALS.iter().map(|x| x.apply(self))
+}
+
+impl Mul<isize> for Point {
+    type Output = Point;
+
+    fn mul(self, d: isize) -> Self::Output {
+        let Point(x, y) = self;
+        Point(x * d, y * d)
     }
-    pub fn diagonal_adj(&self) -> impl Iterator<Item = Self> + '_ {
-        DIAGONALS.iter().map(|x| x.apply(self))
+}
+
+impl Div<Point> for Point {
+    type Output = Point;
+
+    fn div(self, d: Point) -> Self::Output {
+        let Point(x, y) = self;
+        let Point(dx, dy) = d;
+        Point(x / dx, y / dy)
+    }
+}
+
+impl MulAssign<Point> for Point {
+    fn mul_assign(&mut self, d: Point) {
+        let Point(dx, dy) = d;
+        self.0 *= dx;
+        self.1 *= dy;
+    }
+}
+
+impl DivAssign<Point> for Point {
+    fn div_assign(&mut self, d: Point) {
+        let Point(dx, dy) = d;
+        self.0 /= dx;
+        self.1 /= dy;
     }
 }
 
 impl Direction {
-    pub fn apply(&self, point: &Point) -> Point {
-        let Point(dx, dy) = self.to_tuple();
-        Point(point.0 + dx, point.1 + dy)
-    }
     pub const fn to_tuple(&self) -> Point {
         match self {
             North => Point(0, -1),
@@ -62,6 +145,16 @@ impl Direction {
         } else {
             None
         }
+    }
+}
+
+impl Add<Direction> for Direction {
+    type Output = Option<Direction>;
+
+    fn add(self, d: Direction) -> Self::Output {
+        let Point(dx, dy) = self.to_tuple();
+        let Point(dx2, dy2) = d.to_tuple();
+        Direction::try_from(Point(dx + dx2, dy + dy2)).ok()
     }
 }
 
