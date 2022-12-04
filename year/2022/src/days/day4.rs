@@ -7,23 +7,17 @@ pub fn main() -> AocResult {
         .lines()
         .filter_map(|x| {
             x.split(',')
-                .flat_map(|x| {
-                    x.split('-')
-                        .flat_map(|x| x.parse::<usize>().ok())
-                        .collect_tuple()
-                })
+                .flat_map(|x| x.split('-').flat_map(|x| x.parse::<usize>().ok()))
                 .collect_tuple()
         })
-        .filter(|((f1, f2), (s1, s2))| (*f1..=*f2).any(|x| (*s1..=*s2).contains(&x)))
+        .filter(|(f1, f2, s1, s2)| (*f1..=*f2).any(|x| (*s1..=*s2).contains(&x)))
         .collect_vec();
 
     // Part 1
     let part1 = part2
         .iter()
-        .filter(|((f1, f2), (s1, s2))| {
-            (*f1..=*f2).all(|x| (*s1..=*s2).contains(&x))
-                || (*s1..=*s2).all(|x| (*f1..=*f2).contains(&x))
-        })
+        .filter(|(f1, f2, s1, s2)| (f1 <= s1 && f2 >= s2) || (s1 <= f1 && s2 >= f2))
         .count();
+
     done(part1, part2.len())
 }
