@@ -3,7 +3,9 @@ use derive_more::{
     From, Mul, MulAssign, Neg, Not, Product, Rem, RemAssign, Shl, ShlAssign, Shr, ShrAssign, Sub,
     SubAssign, Sum,
 };
-use std::ops::{Add, Mul, Div, MulAssign, DivAssign};
+use std::ops::{Add, Div, DivAssign, Mul, MulAssign};
+
+use crate::dimensions::Dimensions;
 
 pub use self::Direction::*;
 
@@ -11,6 +13,7 @@ pub use self::Direction::*;
     Clone,
     Copy,
     Debug,
+    Default,
     Eq,
     Ord,
     PartialEq,
@@ -57,6 +60,9 @@ impl Point {
     pub fn diagonal_adj(self) -> impl Iterator<Item = Self> + 'static {
         DIAGONALS.into_iter().map(move |x| self + x)
     }
+    pub fn as_index(&self, width: usize) -> Option<usize> {
+        (self.0 + self.1 * (width as isize)).try_into().ok()
+    }
 }
 
 #[derive(Debug)]
@@ -78,7 +84,7 @@ impl Add<Direction> for Point {
 
     fn add(self, d: Direction) -> Self::Output {
         let Point(x, y) = self;
-        let Point(dx, dy) = d.to_tuple();
+        let Point(dx, dy) = d.to_point();
         Point(x + dx, y + dy)
     }
 }
@@ -119,7 +125,7 @@ impl DivAssign<Point> for Point {
 }
 
 impl Direction {
-    pub const fn to_tuple(&self) -> Point {
+    pub const fn to_point(&self) -> Point {
         match self {
             North => Point(0, -1),
             West => Point(-1, 0),
@@ -131,20 +137,11 @@ impl Direction {
             SouthEast => Point(1, 1),
         }
     }
-    pub fn as_index(&self, width: isize) -> isize {
-        let Point(x, y) = self.to_tuple();
-        as_index(x, y, width)
+    pub fn index(&self, p: Point, dimensions: Dimensions) -> Option<usize> {
+        dimensions.index(p + self.to_point())
     }
-    pub fn to_indices(&self, point: Point, width: isize, height: isize) -> Option<isize> {
-        let Point(x, y) = self.to_tuple();
-        let dx = x + point.0;
-        let dy = y + point.0;
-
-        if (0..width).contains(&dx) && (0..height).contains(&dy) {
-            Some(as_index(dx, dy, width))
-        } else {
-            None
-        }
+    pub fn from_index(index: usize, dimensions: Dimensions) -> Option<Self> {
+        dimensions.point(index).and_then(|x| x.try_into().ok())
     }
 }
 
@@ -152,18 +149,14 @@ impl Add<Direction> for Direction {
     type Output = Option<Direction>;
 
     fn add(self, d: Direction) -> Self::Output {
-        let Point(dx, dy) = self.to_tuple();
-        let Point(dx2, dy2) = d.to_tuple();
+        let Point(dx, dy) = self.to_point();
+        let Point(dx2, dy2) = d.to_point();
         Direction::try_from(Point(dx + dx2, dy + dy2)).ok()
     }
 }
 
 pub fn get_all_adjacents() -> impl Iterator<Item = Direction> {
     CARDINALS.into_iter().chain(DIAGONALS.into_iter())
-}
-
-fn as_index(x: isize, y: isize, width: isize) -> isize {
-    x + y * width
 }
 
 impl std::convert::TryFrom<Point> for Direction {

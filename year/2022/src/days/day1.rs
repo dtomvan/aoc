@@ -1,9 +1,6 @@
 use std::cmp::Reverse;
 
-use aoc_common::{
-    puzzle_input::double_split_grouped,
-    result::{done, AocResult, SSum},
-};
+use aoc_common::prelude::*;
 
 use itertools::Itertools;
 

@@ -47,7 +47,7 @@ fn main() -> Result<()> {
                 .context("Could not create today's file")?;
             writeln!(
                 day_file,
-                r#"use aoc_common::result::{{AocResult, done}};
+                r#"use aoc_common::prelude::*;
 pub fn main() -> AocResult {{
     // Part 1
     let input = include_str!("../../inputs/day-{day}.txt");

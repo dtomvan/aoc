@@ -1,7 +1,4 @@
-use aoc_common::{
-    collections::transpose,
-    result::{done, AocResult},
-};
+use aoc_common::prelude::*;
 
 pub fn main() -> AocResult {
     let (graph, inst) = include_str!("../../inputs/day-5.txt")

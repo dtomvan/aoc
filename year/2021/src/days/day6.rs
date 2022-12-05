@@ -1,7 +1,4 @@
-use aoc_common::{
-    parse,
-    result::{done, AocResult},
-};
+use aoc_common::prelude::*;
 use std::collections::VecDeque;
 
 pub fn main() -> AocResult {

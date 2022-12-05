@@ -1,7 +1,4 @@
-use aoc_common::{
-    lines,
-    result::{done, AocResult},
-};
+use aoc_common::prelude::*;
 
 pub fn main() -> AocResult {
     let mut part_1 = 0usize;

@@ -1,4 +1,4 @@
-use aoc_common::result::{done, AocResult};
+use aoc_common::prelude::*;
 
 pub fn main() -> AocResult {
     // Part 1

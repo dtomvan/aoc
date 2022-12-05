@@ -1,9 +1,6 @@
 use std::collections::HashMap;
 
-use aoc_common::{
-    lines, parse,
-    result::{done, AocResult},
-};
+use aoc_common::prelude::*;
 use itertools::Itertools;
 
 pub fn main() -> AocResult {

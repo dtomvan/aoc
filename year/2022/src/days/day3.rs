@@ -1,7 +1,4 @@
-use aoc_common::{
-    lines,
-    result::{done, AocResult, SSum},
-};
+use aoc_common::prelude::*;
 
 pub fn main() -> AocResult {
     let input = lines!("../../inputs/day-3.txt").map(str::as_bytes);

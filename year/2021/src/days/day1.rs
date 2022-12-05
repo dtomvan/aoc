@@ -1,7 +1,4 @@
-use aoc_common::{
-    parse,
-    result::{done, AocResult},
-};
+use aoc_common::prelude::*;
 
 pub fn main() -> AocResult {
     let input = include_str!("../../inputs/day-1.txt")

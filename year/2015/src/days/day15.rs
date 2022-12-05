@@ -3,10 +3,7 @@ use std::{
     hash::Hash,
 };
 
-use aoc_common::{
-    lines,
-    result::{done, AocResult},
-};
+use aoc_common::prelude::*;
 use itertools::Itertools;
 
 pub fn main() -> AocResult {
