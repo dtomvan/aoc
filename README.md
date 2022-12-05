@@ -11,7 +11,7 @@ $ cargo r<year> [solution...]
 These are the coming soon™ solutions to AoC 2022.
 Benchmarks: [here](benchmarks/2022.md).
 ```bash
-$ cargo r2022 1 2
+$ cargo r2022 1 2 3 4 5
 
 ##############
 ## aoc_2022 ##
