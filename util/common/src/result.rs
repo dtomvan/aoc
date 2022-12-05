@@ -14,6 +14,7 @@ pub fn done_second<A: Into<AocD> + Clone, B: Into<AocD>>(
 }
 
 pub type AocResult = anyhow::Result<(AocD, AocD)>;
+pub type AocOption = Option<(AocD, AocD)>;
 
 #[derive(Default, Debug, Clone)]
 pub enum AocD {

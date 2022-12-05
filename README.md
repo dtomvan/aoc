@@ -44,6 +44,13 @@ Part 1: 602
 Part 2: 891
 Took 175 μs
 Lines of code: 18
+
+=== Day 05 ===
+From https://adventofcode.com/2022/day/5
+Part 1: QPJPLMNNR
+Part 2: BQDNWJPVJ
+Took 201 μs
+Lines of code: 38
 ```
 
 ### AOC 2021
