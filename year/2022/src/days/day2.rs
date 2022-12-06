@@ -1,5 +1,4 @@
 use aoc_common::prelude::*;
-use itertools::Itertools;
 
 pub fn main() -> AocResult {
     // Part 1

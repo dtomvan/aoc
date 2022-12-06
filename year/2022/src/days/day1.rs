@@ -2,8 +2,6 @@ use std::cmp::Reverse;
 
 use aoc_common::prelude::*;
 
-use itertools::Itertools;
-
 pub fn main() -> AocResult {
     // Part 1
     let input = double_split_grouped(include_str!("../../inputs/day-1.txt"))

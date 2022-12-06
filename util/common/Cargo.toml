@@ -12,3 +12,5 @@ num-bigint = "0.4.3"
 num-traits = "0.2.15"
 thiserror = "1.0.37"
 derive_more = "0.99.0"
+
+itertools = { workspace = true }

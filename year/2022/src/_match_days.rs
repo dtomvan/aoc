@@ -4,5 +4,6 @@ match arg.as_str() {
 	"3" => day3::main,
 	"4" => day4::main,
 	"5" => day5::main,
+	"6" => day6::main,
     _ => unimplemented!(),
 }
