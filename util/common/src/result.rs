@@ -1,5 +1,6 @@
-use std::{fmt::Display, iter::Sum};
+pub use anyhow::Result;
 
+use std::{fmt::Display, iter::Sum};
 use num_bigint::{BigInt, BigUint};
 
 pub fn done<A: Into<AocD>, B: Into<AocD>>(a: A, b: B) -> AocResult {
@@ -13,12 +14,12 @@ pub fn done_second<A: Into<AocD> + Clone, B: Into<AocD>>(
     Ok((a.clone().into(), b(a).into()))
 }
 
-pub type AocResult = anyhow::Result<(AocD, AocD)>;
-pub type AocOption = Option<(AocD, AocD)>;
+pub type AocResult = Result<(AocD, AocD)>;
 
 #[derive(Default, Debug, Clone)]
 pub enum AocD {
     #[default]
+    TODO,
     Nothing,
     U16(u16),
     Number(usize),
@@ -33,7 +34,8 @@ impl Display for AocD {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         use AocD::*;
         match self {
-            Nothing => write!(f, "TODO"),
+            TODO => write!(f, "TODO"),
+            Nothing => write!(f, "No solution :("),
             U16(n) => write!(f, "{n}"),
             Integer(n) => write!(f, "{n}"),
             Long(n) => write!(f, "{n}"),
@@ -65,7 +67,7 @@ impl From<u16> for AocD {
 
 impl From<()> for AocD {
     fn from(_: ()) -> Self {
-        Self::Nothing
+        Self::TODO
     }
 }
 
@@ -102,6 +104,18 @@ impl From<BigUint> for AocD {
 impl From<usize> for AocD {
     fn from(v: usize) -> Self {
         Self::Number(v)
+    }
+}
+
+impl<T> From<Option<T>> for AocD
+where
+    AocD: From<T>,
+{
+    fn from(v: Option<T>) -> Self {
+        match v {
+            Some(v) => Self::from(v),
+            None => Self::Nothing,
+        }
     }
 }
 

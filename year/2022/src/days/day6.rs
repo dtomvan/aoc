@@ -1,18 +1,10 @@
 use aoc_common::prelude::*;
 
 pub fn main() -> AocResult {
-    let input = include_str!("../../inputs/day-6.txt")
-        .trim()
-        .chars()
-        .collect_vec();
+    let input = chars!("../../inputs/day-6.txt").collect();
 
-    done(solve(&input, 4), solve(&input, 14))
-}
-
-fn solve(input: &Vec<char>, len: usize) -> usize {
-    input
-        .windows(len)
-        .position(|slice| slice.into_iter().all_unique())
-        .unwrap()
-        + len
+    done(
+        unique_window_end(&input, 4).f().res()? + 1,
+        unique_window_end(&input, 14).f().res()? + 1,
+    )
 }

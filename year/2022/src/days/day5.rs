@@ -3,24 +3,23 @@ use aoc_common::prelude::*;
 pub fn main() -> AocResult {
     let (graph, inst) = include_str!("../../inputs/day-5.txt")
         .split_once("\n\n")
-        .unwrap();
+        .res()?;
 
     let inst: Vec<[usize; 3]> = inst
         .split_whitespace()
-        .filter_map(|x| x.parse().ok())
+        .filter_map(parse!())
         .array_chunks()
         .collect();
 
-    let data: Vec<Vec<_>> = transpose(
-        graph
-            .lines()
-            .map(|x| x.chars().skip(1).step_by(4).collect::<Vec<_>>())
-            .filter(|x| !x.is_empty())
-            .collect(),
-    )
-    .into_iter()
-    .map(|x| x.into_iter().filter(|x| x.is_alphabetic()).rev().collect())
-    .collect();
+    let data: Vec<Vec<_>> = graph
+        .lines()
+        .map(|x| x.chars().skip(1).step_by(4).collect_vec())
+        .filter(|x| !x.is_empty())
+        .collect_vec()
+        .transpose()
+        .into_iter()
+        .map(|x| x.into_iter().filter(|x| x.is_alphabetic()).rev().collect())
+        .collect();
 
     done(s(inst.clone(), data.clone(), true), s(inst, data, false))
 }

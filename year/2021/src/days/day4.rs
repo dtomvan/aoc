@@ -79,7 +79,7 @@ impl Board {
     }
     fn won(&self) -> bool {
         self.rows()
-            .any(|x| is_filled(&x.iter().collect::<Vec<_>>()[..]))
+            .any(|x| is_filled(&x.iter().collect_vec()[..]))
             || self.cols().any(|x| is_filled(&x[..]))
     }
 }

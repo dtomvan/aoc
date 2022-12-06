@@ -3,11 +3,11 @@ use aoc_common::prelude::*;
 pub fn main() -> AocResult {
     let input = include_str!("../../inputs/day-3.txt");
 
-    let numbers: Vec<_> = input
+    let code_length = input.lines().next().why("empty input")?.len();
+    let numbers = input
         .lines()
         .filter_map(|x| usize::from_str_radix(x, 2).ok())
-        .collect();
-    let code_length = input.lines().next().unwrap().len();
+        .collect_vec();
 
     // Part 1
     let most_common = (0..code_length)

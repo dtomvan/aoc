@@ -325,3 +325,11 @@ macro_rules! lines {
         include_str!($file).lines()
     };
 }
+
+#[macro_export]
+macro_rules! chars {
+    ($file:literal) => {
+        include_str!($file).trim().chars()
+    };
+}
+

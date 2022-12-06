@@ -1,4 +1,4 @@
-pub use crate::{lines, parse};
+pub use crate::{chars, lines, parse};
 
 pub use crate::collections::*;
 pub use crate::dimensions::*;

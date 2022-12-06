@@ -6,8 +6,8 @@ use itertools::Itertools;
 pub fn main() -> AocResult {
     let input: HashMap<_, _> = include_str!("../../inputs/day-12.txt")
         .lines()
-        .filter_map(|x| x.split('-').collect_tuple::<(_, _)>())
-        .flat_map(|x| [(x.0, x.1), (x.1, x.0)])
+        .filter_map(|x| x.split('-').collect_tuple())
+        .flat_map(|(a, b)| [(a, b), (b, a)])
         .into_group_map_by(|x| x.0)
         .into_iter()
         .map(|x| (x.0, x.1.into_iter().map(|y| y.1).collect_vec()))
