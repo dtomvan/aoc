@@ -5,14 +5,14 @@ pub fn main() -> AocResult {
         .trim()
         .chars()
         .collect_vec();
+
     done(solve(&input, 4), solve(&input, 14))
 }
 
 fn solve(input: &Vec<char>, len: usize) -> usize {
     input
         .windows(len)
-        .find_position(|slice| slice.into_iter().all_unique())
+        .position(|slice| slice.into_iter().all_unique())
         .unwrap()
-        .0
         + len
 }
