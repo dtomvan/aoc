@@ -1,6 +1,6 @@
-pub mod option_tuple;
+pub mod tuples;
 
-pub use option_tuple::*;
+pub use tuples::*;
 
 use itertools::Itertools;
 use std::hash::Hash;
@@ -54,24 +54,24 @@ impl<T: Clone> Rotate<T> for Vec<T> {
     }
 }
 
-pub fn unique_window_start<T>(vec: &Vec<T>, len: usize) -> Option<(usize, &[T])>
+pub fn unique_window_start<T>(vec: &[T], len: usize) -> Option<(usize, &[T])>
 where
     T: Hash + Eq,
 {
     vec.windows(len)
-        .find_position(|slice| slice.into_iter().all_unique())
+        .find_position(|slice| slice.iter().all_unique())
 }
 
-pub fn unique_window_end<T>(vec: &Vec<T>, len: usize) -> Option<(usize, &[T])>
+pub fn unique_window_end<T>(vec: &[T], len: usize) -> Option<(usize, &[T])>
 where
     T: Hash + Eq,
 {
     unique_window_start(vec, len).map(|(n, t)| (n + len, t))
 }
 
-#[derive(Debug, Clone, Error)]
-#[error("{0}")]
-pub struct Unavailable(&'static str);
+#[derive(Debug, Default, Clone, Error)]
+#[error("Value is unavailable: `{0}`")]
+pub struct Unavailable(pub &'static str);
 
 pub trait OptionRes<T>: Sized {
     fn res(self) -> Result<T, Unavailable>;
@@ -80,9 +80,23 @@ pub trait OptionRes<T>: Sized {
 
 impl<T> OptionRes<T> for Option<T> {
     fn res(self) -> Result<T, Unavailable> {
-        self.ok_or_else(|| Unavailable("None"))
+        self.ok_or(Unavailable("None"))
     }
     fn why(self, s: &'static str) -> Result<T, Unavailable> {
-        self.ok_or_else(|| Unavailable(s))
+        self.ok_or(Unavailable(s))
     }
+}
+
+#[macro_export]
+macro_rules! vec_deque {
+    [] => (
+        ::std::collections::VecDeque::new()
+    );
+    [$elem:expr; $n:expr] => (
+        let mut x = ::std::collections::VecDeque::new();
+        x.push_front($n);
+    );
+    [$($x:expr),+ $(,)?] => (
+        ::std::collections::VecDeque::from([$($x),+])
+    );
 }

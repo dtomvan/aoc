@@ -1,3 +1,5 @@
+use std::ops::RangeInclusive;
+
 use crate::point::Point;
 
 macro_rules! adj_impl {
@@ -14,11 +16,12 @@ macro_rules! adj_impl {
 
 #[derive(Clone, Debug, Default, Eq, Ord, PartialEq, PartialOrd)]
 pub struct Dimensions {
-    width: usize,
-    height: usize,
+    pub width: usize,
+    pub height: usize,
     /// 1st, 2nd, 3rd, 4th
     /// top-right, top-left, bottom-left, bottom-right
-    quadrants: [bool; 4],
+    pub quadrants: [bool; 4],
+    pub(crate) rep: Option<isize>,
 }
 
 impl Dimensions {
@@ -30,6 +33,7 @@ impl Dimensions {
             width,
             height,
             quadrants,
+            rep: None,
         }
     }
 
@@ -43,8 +47,8 @@ impl Dimensions {
             (true, false) => 1,
             (false, true) => 3,
             (false, false) => 0,
-        }] && (x.abs() < self.width as isize)
-            && (y.abs() < self.height as isize)
+        }] && (x.abs() < self.pseudo_width())
+            && (y.abs() < self.pseudo_height())
     }
 
     pub fn n_quadrants(&self) -> usize {
@@ -54,9 +58,7 @@ impl Dimensions {
     pub fn index(&self, p: Point) -> Option<usize> {
         let Point(x, y) = p + self.map();
         if self.bounds(&p) {
-            (x + y * self.width as isize * self.n_quadrants() as isize / 2)
-                .try_into()
-                .ok()
+            (x + y * self.total_width()).try_into().ok()
         } else {
             None
         }
@@ -64,7 +66,7 @@ impl Dimensions {
 
     pub fn point(&self, i: usize) -> Option<Point> {
         i.try_into().ok().and_then(|i: isize| {
-            let total_width = (self.width * self.n_quadrants() / 2) as isize;
+            let total_width = self.total_width();
             let p = Point(i % total_width, i / total_width) - self.map();
 
             if self.bounds(&p) {
@@ -78,12 +80,12 @@ impl Dimensions {
     fn map(&self) -> Point {
         Point(
             if self.quadrants[1] || self.quadrants[2] {
-                self.width as isize
+                self.pseudo_width()
             } else {
                 0
             },
             if self.quadrants[2] || self.quadrants[3] {
-                self.height as isize
+                self.pseudo_height()
             } else {
                 0
             },
@@ -91,6 +93,73 @@ impl Dimensions {
     }
 
     adj_impl!(adj, cardinal_adj, diagonal_adj);
+
+    pub(crate) fn x_range(&self) -> RangeInclusive<isize> {
+        let pseudo_width = self.pseudo_width();
+
+        if self.quadrants[1] || self.quadrants[2] {
+            -(pseudo_width)..=pseudo_width
+        } else {
+            0..=pseudo_width
+        }
+    }
+
+    pub(crate) fn y_range(&self) -> RangeInclusive<isize> {
+        let pseudo_height = self.pseudo_height();
+
+        if self.quadrants[2] || self.quadrants[3] {
+            -(pseudo_height)..=pseudo_height
+        } else {
+            0..=pseudo_height
+        }
+    }
+
+    pub fn rep_amount(&self, p: Point) -> Point {
+        p / Point(self.width as isize, self.height as isize)
+    }
+
+    #[inline]
+    #[must_use]
+    pub fn area(&self) -> usize {
+        self.width * self.height
+    }
+
+    #[must_use]
+    pub fn w_h(&self) -> Point {
+        Point(self.pseudo_width(), self.pseudo_height())
+    }
+
+    #[inline(always)]
+    #[must_use]
+    fn total_width(&self) -> isize {
+        let q = self.n_quadrants() as isize;
+        let w = self.pseudo_width();
+        if q != 1 {
+            w * q
+        } else {
+            w
+        }
+    }
+
+    #[inline(always)]
+    #[must_use]
+    pub fn pseudo_width(&self) -> isize {
+        if let Some(rep) = self.rep {
+            rep * self.width as isize
+        } else {
+            self.width as _
+        }
+    }
+
+    #[inline(always)]
+    #[must_use]
+    pub fn pseudo_height(&self) -> isize {
+        if let Some(rep) = self.rep {
+            rep * self.height as isize
+        } else {
+            self.height as _
+        }
+    }
 }
 
 pub const fn q_all() -> [bool; 4] {

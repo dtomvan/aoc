@@ -1,42 +1,40 @@
-// DOESNT WORK
 use aoc_common::prelude::*;
-use itertools::Itertools;
 
 pub fn main() -> AocResult {
-    let input = include_str!("../../inputs/day-15.test")
-        .lines()
-        .map(|x| x.chars().flat_map(|x| x.to_digit(10)).collect_vec())
-        .collect_vec();
+    let grid = Grid::try_from(
+        include_str!("../../inputs/day-15.test")
+            .lines()
+            .map(|x| x.chars().flat_map(|x| x.to_digit(10)).collect_vec())
+            .collect_vec(),
+    )?;
 
-    let d = Dimensions::fnew(input[0].len(), input.len(), q_pos);
+    // Zero-indexed
+    let i = grid[0];
 
-    let flat_i = input.iter().flatten().collect_vec();
+    let part_1 = dijkstra(
+        grid.clone(),
+        State::initial(i),
+        CARDINALS,
+        |x, _| x as isize,
+        |state| state.position == (grid.dimensions().w_h() - 1),
+    );
 
-    let adj_list: Graph = (0..flat_i.len())
-        .into_iter()
-        .map(|i| {
-            let p = d.point(i).unwrap();
+    let grid = grid * 5;
+    let d = grid.dimensions().clone();
+    let part_2 = dijkstra(
+        grid,
+        State::initial(i),
+        CARDINALS,
+        |x, p| {
+            let n = x as isize + d.rep_amount(p).t().sum();
+            if n < 10 {
+                n
+            } else {
+                n - 9
+            }
+        },
+        |state| state.position == d.w_h() - 1,
+    );
 
-            CARDINALS
-                .into_iter()
-                .filter_map(|dir| {
-                    d.index(p + dir).and_then(|j| {
-                        if j != i {
-                            Some(Edge {
-                                node: p.0 as usize,
-                                cost: *flat_i[p.0 as usize] as isize,
-                            })
-                        } else {
-                            None
-                        }
-                    })
-                })
-                .collect_vec()
-        })
-        .collect_vec();
-
-    let last = flat_i.len() - 1;
-    let part_1 = dijkstra(adj_list, |state| state.position == last);
-
-    done((part_1 - *flat_i[0] as isize) as usize, ())
+    done(part_1.res()?.cost, part_2.res()?.cost)
 }

@@ -3,7 +3,7 @@ use derive_more::{
     From, Mul, MulAssign, Neg, Not, Product, Rem, RemAssign, Shl, ShlAssign, Shr, ShrAssign, Sub,
     SubAssign, Sum,
 };
-use std::ops::{Add, Div, DivAssign, Mul, MulAssign};
+use std::ops::{Add, Div, DivAssign, Mul, MulAssign, Sub};
 
 use crate::dimensions::Dimensions;
 
@@ -15,6 +15,7 @@ pub use self::Direction::*;
     Debug,
     Default,
     Eq,
+    Hash,
     Ord,
     PartialEq,
     PartialOrd,
@@ -45,27 +46,29 @@ pub use self::Direction::*;
     Sum,
 )]
 #[mul(forward)]
+#[div(forward)]
 pub struct Point(pub isize, pub isize);
 
 pub const CARDINALS: [Direction; 4] = [North, West, South, East];
 pub const DIAGONALS: [Direction; 4] = [NorthWest, NorthEast, SouthWest, SouthEast];
 
 impl Point {
+    #[inline]
+    pub fn t(self) -> (isize, isize) {
+        (self.0, self.1)
+    }
     pub fn adj(self) -> impl Iterator<Item = Self> + 'static {
         get_all_adjacents().map(move |x| self + x)
     }
     pub fn cardinal_adj(self) -> impl Iterator<Item = Self> + 'static {
-        DIAGONALS.into_iter().map(move |x| self + x)
+        CARDINALS.into_iter().map(move |x| self + x)
     }
     pub fn diagonal_adj(self) -> impl Iterator<Item = Self> + 'static {
         DIAGONALS.into_iter().map(move |x| self + x)
     }
-    pub fn as_index(&self, width: usize) -> Option<usize> {
-        (self.0 + self.1 * (width as isize)).try_into().ok()
-    }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Direction {
     // Cardinals
     North,
@@ -89,22 +92,30 @@ impl Add<Direction> for Point {
     }
 }
 
+impl Sub<isize> for Point {
+    type Output = Point;
+
+    fn sub(self, d: isize) -> Self::Output {
+        let Point(x, y) = self;
+        Point(x - d, y - d)
+    }
+}
+
+impl Div<isize> for Point {
+    type Output = Point;
+
+    fn div(self, d: isize) -> Self::Output {
+        let Point(x, y) = self;
+        Point(x / d, y / d)
+    }
+}
+
 impl Mul<isize> for Point {
     type Output = Point;
 
     fn mul(self, d: isize) -> Self::Output {
         let Point(x, y) = self;
         Point(x * d, y * d)
-    }
-}
-
-impl Div<Point> for Point {
-    type Output = Point;
-
-    fn div(self, d: Point) -> Self::Output {
-        let Point(x, y) = self;
-        let Point(dx, dy) = d;
-        Point(x / dx, y / dy)
     }
 }
 

@@ -136,3 +136,26 @@ macro_rules! ssum_impl {
 }
 
 ssum_impl!(usize, u8, u16, u32, u64, isize, i8, i16, i32, i64, f32, f64);
+
+pub trait BoolThen: Sized {
+    fn then<T>(self, value: T) -> Option<T>;
+    fn and_then<T>(self, value: impl FnMut() -> T) -> Option<T>;
+}
+
+impl BoolThen for bool {
+    fn then<T>(self, value: T) -> Option<T> {
+        if self {
+            Some(value)
+        } else {
+            None
+        }
+    }
+
+    fn and_then<T>(self, mut value: impl FnMut() -> T) -> Option<T> {
+        if self {
+            Some(value())
+        } else {
+            None
+        }
+    }
+}

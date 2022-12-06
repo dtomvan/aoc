@@ -21,43 +21,43 @@ $ cargo r2022 1 2 3 4 5 6
 From https://adventofcode.com/2022/day/1
 Part 1: 68923
 Part 2: 200044
-Took 75 μs
+Took 59 μs
 Lines of code: 10
 
 === Day 02 ===
 From https://adventofcode.com/2022/day/2
 Part 1: 15632
 Part 2: 14416
-Took 187 μs
+Took 127 μs
 Lines of code: 29
 
 === Day 03 ===
 From https://adventofcode.com/2022/day/3
 Part 1: 7742
 Part 2: 2276
-Took 124 μs
+Took 96 μs
 Lines of code: 18
 
 === Day 04 ===
 From https://adventofcode.com/2022/day/4
 Part 1: 602
 Part 2: 891
-Took 138 μs
+Took 111 μs
 Lines of code: 15
 
 === Day 05 ===
 From https://adventofcode.com/2022/day/5
 Part 1: QPJPLMNNR
 Part 2: BQDNWJPVJ
-Took 120 μs
-Lines of code: 35
+Took 89 μs
+Lines of code: 34
 
 === Day 06 ===
 From https://adventofcode.com/2022/day/6
 Part 1: 1912
 Part 2: 2122
-Took 611 μs
-Lines of code: 16
+Took 500 μs
+Lines of code: 8
 ```
 
 ### AOC 2021
