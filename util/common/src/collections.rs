@@ -31,13 +31,26 @@ where
         let len = self[0].len();
         let mut iters: Vec<_> = self.into_iter().map(|n| n.into_iter()).collect();
         (0..len)
-            .map(|_| {
-                iters
-                    .iter_mut()
-                    .map(|n| n.next().unwrap())
-                    .collect()
-            })
+            .map(|_| iters.iter_mut().map(|n| n.next().unwrap()).collect())
             .collect()
+    }
+}
+
+pub trait Rotate<T>: Sized {
+    fn rotate(self, amount: usize) -> Self;
+}
+
+impl<T: Clone> Rotate<T> for Vec<T> {
+    fn rotate(self, amount: usize) -> Self {
+        let len = self.len();
+        let modded = amount % len;
+        let shift = if amount < 1 { len + modded } else { modded };
+        if shift == 0 {
+            self
+        } else {
+            let (l, r) = self.split_at(len - shift);
+            [r, l].concat()
+        }
     }
 }
 
