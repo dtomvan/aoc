@@ -10,3 +10,6 @@ pub use crate::puzzle_input::*;
 pub use crate::result::*;
 
 pub use itertools::Itertools;
+
+pub use std::collections::*;
+pub use std::path::*;
