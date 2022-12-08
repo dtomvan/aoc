@@ -1,4 +1,4 @@
-use std::ops::RangeInclusive;
+use std::ops::Range;
 
 use crate::point::Point;
 
@@ -94,23 +94,23 @@ impl Dimensions {
 
     adj_impl!(adj, cardinal_adj, diagonal_adj);
 
-    pub(crate) fn x_range(&self) -> RangeInclusive<isize> {
+    pub fn x_range(&self) -> Range<isize> {
         let pseudo_width = self.pseudo_width();
 
         if self.quadrants[1] || self.quadrants[2] {
-            -(pseudo_width)..=pseudo_width
+            -(pseudo_width)..pseudo_width
         } else {
-            0..=pseudo_width
+            0..pseudo_width
         }
     }
 
-    pub(crate) fn y_range(&self) -> RangeInclusive<isize> {
+    pub fn y_range(&self) -> Range<isize> {
         let pseudo_height = self.pseudo_height();
 
         if self.quadrants[2] || self.quadrants[3] {
-            -(pseudo_height)..=pseudo_height
+            -(pseudo_height)..pseudo_height
         } else {
-            0..=pseudo_height
+            0..pseudo_height
         }
     }
 

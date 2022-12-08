@@ -58,6 +58,20 @@ Part 1: 1912
 Part 2: 2122
 Took 500 μs
 Lines of code: 8
+
+=== Day 07 ===
+From https://adventofcode.com/2022/day/7
+Part 1: 1667443
+Part 2: 8998590
+Took 2812 μs
+Lines of code: 50
+
+=== Day 08 ===
+From https://adventofcode.com/2022/day/8
+Part 1: 1672
+Part 2: 327180
+Took 6952 μs
+Lines of code: 42
 ```
 
 ### AOC 2021

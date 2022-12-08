@@ -24,6 +24,34 @@ pub trait Plane {
             .map(|(x, y)| Point(x, y))
     }
 
+    fn column(&self, x: isize) -> impl Iterator<Item = Point> {
+        self.dimensions().y_range().map(move |y| Point(x, y))
+    }
+
+    fn row(&self, y: isize) -> impl Iterator<Item = Point> {
+        self.dimensions().x_range().map(move |x| Point(x, y))
+    }
+
+    fn column_values<T: Clone, U: FromIterator<T>>(&self, x: isize) -> U
+    where
+        Self: Index<Point, Output = T>,
+    {
+        self.dimensions()
+            .y_range()
+            .map(|y| self[Point(x, y)].clone())
+            .collect()
+    }
+
+    fn row_values<T: Clone, U: FromIterator<T>>(&self, y: isize) -> U
+    where
+        Self: Index<Point, Output = T>,
+    {
+        self.dimensions()
+            .x_range()
+            .map(|x| self[Point(x, y)].clone())
+            .collect()
+    }
+
     adj_impl!(adj, cardinal_adj, diagonal_adj);
 }
 
