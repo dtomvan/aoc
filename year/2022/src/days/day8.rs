@@ -1,16 +1,12 @@
 use aoc_common::prelude::*;
 
 pub fn main() -> AocResult {
-    let grid = Grid::try_from(
-        include_str!("../../inputs/day-8.txt")
-            .trim()
-            .lines()
-            .map(|x| x.chars().collect_vec())
-            .collect_vec(),
-    )?;
+    let grid = Grid::chars(include_str!("../../inputs/day-8.txt"))?;
+    let points = grid.points().map(|x| (grid[x], x)).collect_vec();
+
     done(
-        grid.points()
-            .map(|x| (grid[x], x))
+        points
+            .iter()
             .filter(|(v, p)| {
                 let c = grid.column(p.0).collect_vec();
                 let (lc, rc) = c.split_at(p.1 as usize);
@@ -21,8 +17,8 @@ pub fn main() -> AocResult {
                 check(&lc[..]) || check(&rc[1..]) || check(&lr[..]) || check(&rr[1..])
             })
             .count(),
-        grid.points()
-            .map(|x| (grid[x], x))
+        points
+            .into_iter()
             .map(|(v, p)| {
                 let mut c = grid.column(p.0).collect_vec();
                 let (lc, rc) = c.split_at_mut(p.1 as usize);

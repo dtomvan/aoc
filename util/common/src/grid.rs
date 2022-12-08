@@ -1,10 +1,14 @@
-use std::ops::{Index, Mul};
+use std::{
+    ops::{Index, Mul},
+    str::FromStr,
+};
 
 use itertools::{iproduct, Itertools};
 
 use crate::{
     collections::{OptionRes, Unavailable},
     dimensions::{q_pos, Dimensions},
+    parse,
     point::Point,
 };
 
@@ -94,6 +98,17 @@ pub struct Grid<T> {
     pub data: Vec<T>,
 }
 
+impl CharGrid {
+    pub fn chars(s: &'static str) -> Result<Self, Unavailable> {
+        Self::try_from(
+            s.trim()
+                .lines()
+                .map(|x| x.chars().collect_vec())
+                .collect_vec(),
+        )
+    }
+}
+
 impl<T> Grid<T> {
     pub fn new(width: usize, height: usize, data: Vec<T>) -> Self {
         Self {
@@ -176,6 +191,23 @@ impl<T> TryFrom<Vec<Vec<T>>> for Grid<T> {
             }
             .why("inequal widths")
         })
+    }
+}
+
+impl<T: FromStr> TryFrom<&'static str> for Grid<T> {
+    type Error = Unavailable;
+
+    fn try_from(v: &'static str) -> Result<Self, Self::Error> {
+        Self::try_from(
+            v.trim()
+                .lines()
+                .map(|x| {
+                    x.chars()
+                        .filter_map(|x| x.encode_utf8(&mut [0; 8]).parse::<T>().ok())
+                        .collect_vec()
+                })
+                .collect_vec(),
+        )
     }
 }
 

@@ -5,8 +5,8 @@ pub fn main() -> AocResult {
     let mut pwd = PathBuf::from("/");
 
     for line in include_str!("../../inputs/day-7.txt").lines() {
-        if line.starts_with("$ cd ") {
-            match &line[5..] {
+        if let Some(line) = line.strip_prefix("$ cd ") {
+            match line {
                 ".." => {
                     pwd.pop();
                 }
@@ -19,8 +19,8 @@ pub fn main() -> AocResult {
                 map.entry(format!("{}/{}", pwd.display(), l.1))
                     .or_insert_with(|| Node::File(size));
             }
-        } else if line.starts_with("dir") {
-            map.entry(format!("{}/{}", pwd.display().to_string(), &line[4..]))
+        } else if let Some(dir) = line.strip_prefix("dir ") {
+            map.entry(format!("{}/{}", pwd.display().to_string(), dir))
                 .or_insert(Node::Dir);
         }
     }
