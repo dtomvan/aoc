@@ -1,13 +1,19 @@
+pub use self::Direction::*;
+
+use std::{
+    cmp::{max, min},
+    ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub},
+    str::FromStr,
+};
+use crate::{collections::Unavailable, dimensions::Dimensions};
+
+use itertools::Itertools;
 use derive_more::{
     Add, AddAssign, BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, Div, DivAssign,
     From, Mul, MulAssign, Neg, Not, Product, Rem, RemAssign, Shl, ShlAssign, Shr, ShrAssign, Sub,
     SubAssign, Sum,
 };
-use std::ops::{Add, Div, DivAssign, Mul, MulAssign, Sub};
-
-use crate::dimensions::Dimensions;
-
-pub use self::Direction::*;
+use paste::paste;
 
 #[derive(
     Clone,
@@ -52,19 +58,37 @@ pub struct Point(pub isize, pub isize);
 pub const CARDINALS: [Direction; 4] = [North, West, South, East];
 pub const DIAGONALS: [Direction; 4] = [NorthWest, NorthEast, SouthWest, SouthEast];
 
+macro_rules! is_adj_impl {
+    ($($f:ident),+) => {
+        $(paste!{pub fn [<is_ $f>](self, other: &Self) -> bool {
+            self.$f().contains(other)
+        }})+
+    };
+}
+
 impl Point {
     #[inline]
     pub fn t(self) -> (isize, isize) {
         (self.0, self.1)
     }
     pub fn adj(self) -> impl Iterator<Item = Self> + 'static {
-        get_all_adjacents().map(move |x| self + x)
+        self.cardinal_adj().chain(self.diagonal_adj())
     }
     pub fn cardinal_adj(self) -> impl Iterator<Item = Self> + 'static {
         CARDINALS.into_iter().map(move |x| self + x)
     }
     pub fn diagonal_adj(self) -> impl Iterator<Item = Self> + 'static {
         DIAGONALS.into_iter().map(move |x| self + x)
+    }
+    is_adj_impl!(adj, cardinal_adj, diagonal_adj);
+    pub fn clamp(self, bx: isize, by: isize) -> Self {
+        Self(min(max(self.0, -bx), bx), min(max(self.1, -by), by))
+    }
+    pub fn clamp_b(self, min_x: isize, max_x: isize, min_y: isize, max_y: isize) -> Self {
+        Self(
+            min(max(self.0, min_x), max_x),
+            min(max(self.1, min_y), max_y),
+        )
     }
 }
 
@@ -89,6 +113,14 @@ impl Add<Direction> for Point {
         let Point(x, y) = self;
         let Point(dx, dy) = d.to_point();
         Point(x + dx, y + dy)
+    }
+}
+
+impl AddAssign<Direction> for Point {
+    fn add_assign(&mut self, d: Direction) {
+        let Point(dx, dy) = d.to_point();
+        self.0 += dx;
+        self.1 += dy;
     }
 }
 
@@ -148,11 +180,42 @@ impl Direction {
             SouthEast => Point(1, 1),
         }
     }
+    pub const fn flipped_x(self) -> Self {
+        match self {
+            West => East,
+            East => West,
+            x => x,
+        }
+    }
+    pub const fn flipped_y(self) -> Self {
+        match self {
+            North => South,
+            South => North,
+            x => x,
+        }
+    }
+    pub fn from_point_clamped(p: Point) -> Self {
+        Self::try_from(p.clamp(1, 1)).unwrap()
+    }
     pub fn index(&self, p: Point, dimensions: Dimensions) -> Option<usize> {
         dimensions.index(p + self.to_point())
     }
     pub fn from_index(index: usize, dimensions: Dimensions) -> Option<Self> {
         dimensions.point(index).and_then(|x| x.try_into().ok())
+    }
+}
+
+impl FromStr for Direction {
+    type Err = Unavailable;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "U" => Ok(Direction::North),
+            "D" => Ok(Direction::South),
+            "L" => Ok(Direction::West),
+            "R" => Ok(Direction::East),
+            _ => Err(Unavailable("Expected one of U, D, L, R")),
+        }
     }
 }
 
@@ -164,10 +227,6 @@ impl Add<Direction> for Direction {
         let Point(dx2, dy2) = d.to_point();
         Direction::try_from(Point(dx + dx2, dy + dy2)).ok()
     }
-}
-
-pub fn get_all_adjacents() -> impl Iterator<Item = Direction> {
-    CARDINALS.into_iter().chain(DIAGONALS.into_iter())
 }
 
 impl std::convert::TryFrom<Point> for Direction {

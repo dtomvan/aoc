@@ -12,9 +12,9 @@ pub fn main() -> AocResult {
                 let (lc, rc) = c.split_at(p.1 as usize);
                 let r = grid.row(p.1).collect_vec();
                 let (lr, rr) = r.split_at(p.0 as usize);
-                let check = |points: &[Point]| points.into_iter().all(|x| grid[*x] < *v);
+                let check = |points: &[Point]| points.iter().all(|x| grid[*x] < *v);
 
-                check(&lc[..]) || check(&rc[1..]) || check(&lr[..]) || check(&rr[1..])
+                check(lc) || check(&rc[1..]) || check(lr) || check(&rr[1..])
             })
             .count(),
         points
@@ -30,13 +30,13 @@ pub fn main() -> AocResult {
 
                 let check = |points: &[Point]| {
                     points
-                        .into_iter()
+                        .iter()
                         .position(|x| grid[*x] >= v)
                         .map(|x| x + 1)
                         .unwrap_or(points.len())
                 };
 
-                check(&lc[..]) * check(&rc[1..]) * check(&lr[..]) * check(&rr[1..])
+                check(lc) * check(&rc[1..]) * check(lr) * check(&rr[1..])
             })
             .max(),
     )

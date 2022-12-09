@@ -8,7 +8,6 @@ use itertools::{iproduct, Itertools};
 use crate::{
     collections::{OptionRes, Unavailable},
     dimensions::{q_pos, Dimensions},
-    parse,
     point::Point,
 };
 

@@ -11,16 +11,16 @@ pub fn main() -> AocResult {
                     pwd.pop();
                 }
                 "/" => {}
-                x => pwd.push(x.to_string()),
+                x => pwd.push(x),
             }
         } else if line.starts_with(|x: char| x.is_numeric()) {
             let l = line.split_once(' ').unwrap();
-            if let Some(size) = l.0.parse().ok() {
+            if let Ok(size) = l.0.parse() {
                 map.entry(format!("{}/{}", pwd.display(), l.1))
                     .or_insert_with(|| Node::File(size));
             }
         } else if let Some(dir) = line.strip_prefix("dir ") {
-            map.entry(format!("{}/{}", pwd.display().to_string(), dir))
+            map.entry(format!("{}/{}", pwd.display(), dir))
                 .or_insert(Node::Dir);
         }
     }
