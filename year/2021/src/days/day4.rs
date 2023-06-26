@@ -17,29 +17,31 @@ pub fn main() -> AocResult {
     let mut part_1 = None;
     let mut part_2 = None;
     for draw in draws {
-        boards.drain_filter(|board| {
-            board
-                .iter_mut()
-                .filter(|x| x.has(draw))
-                .for_each(Cell::fill);
-            let won = board.won();
-            if won {
-                let score = draw
-                    * board
-                        .iter()
-                        .filter_map(|x| {
-                            if let Cell::Empty(n) = x {
-                                Some(n)
-                            } else {
-                                None
-                            }
-                        })
-                        .sum::<usize>();
-                part_1.get_or_insert(score);
-                let _ = part_2.insert(score);
-            }
-            won
-        });
+        let _ = boards
+            .extract_if(|board| {
+                board
+                    .iter_mut()
+                    .filter(|x| x.has(draw))
+                    .for_each(Cell::fill);
+                let won = board.won();
+                if won {
+                    let score = draw
+                        * board
+                            .iter()
+                            .filter_map(|x| {
+                                if let Cell::Empty(n) = x {
+                                    Some(n)
+                                } else {
+                                    None
+                                }
+                            })
+                            .sum::<usize>();
+                    part_1.get_or_insert(score);
+                    let _ = part_2.insert(score);
+                }
+                won
+            })
+            .last();
     }
 
     done(part_1.unwrap(), part_2.unwrap())
@@ -78,8 +80,7 @@ impl Board {
         self.0.iter_mut().flat_map(|x| x.iter_mut())
     }
     fn won(&self) -> bool {
-        self.rows()
-            .any(|x| is_filled(&x.iter().collect_vec()[..]))
+        self.rows().any(|x| is_filled(&x.iter().collect_vec()[..]))
             || self.cols().any(|x| is_filled(&x[..]))
     }
 }
