@@ -1,7 +1,7 @@
 pub use anyhow::Result;
 
-use std::{fmt::Display, iter::Sum};
 use num_bigint::{BigInt, BigUint};
+use std::{fmt::Display, iter::Sum};
 
 pub fn done<A: Into<AocD>, B: Into<AocD>>(a: A, b: B) -> AocResult {
     Ok((a.into(), b.into()))
@@ -16,7 +16,7 @@ pub fn done_second<A: Into<AocD> + Clone, B: Into<AocD>>(
 
 pub type AocResult = Result<(AocD, AocD)>;
 
-#[derive(Default, Debug, Clone)]
+#[derive(PartialEq, Eq, Default, Debug, Clone)]
 pub enum AocD {
     #[default]
     TODO,
@@ -28,6 +28,12 @@ pub enum AocD {
     Long(BigInt),
     String(String),
     List(Vec<AocD>),
+}
+
+impl AocD {
+    pub fn has_value(&self) -> bool {
+        self != &Self::TODO && self != &Self::Nothing
+    }
 }
 
 impl Display for AocD {

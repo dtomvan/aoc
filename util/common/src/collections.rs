@@ -3,8 +3,99 @@ pub mod tuples;
 pub use tuples::*;
 
 use itertools::Itertools;
-use std::hash::Hash;
+use std::{hash::Hash, str::Chars};
 use thiserror::Error;
+
+pub trait CharWindows<'a, U, I>
+where
+    I: IntoIterator<Item = char>,
+{
+    fn char_windows(&'a self, win_size: usize, partial_windows: bool) -> impl Iterator<Item = U>;
+}
+
+impl<'a, T> CharWindows<'a, &'a str, Chars<'a>> for T
+where
+    T: AsRef<str>,
+{
+    fn char_windows(
+        &'a self,
+        win_size: usize,
+        partial_windows: bool,
+    ) -> impl Iterator<Item = &'a str> {
+        let src = self.as_ref();
+        let len = src.len();
+        char_windows_str(src, len, win_size, partial_windows)
+    }
+}
+
+pub fn char_windows_str(
+    src: &str,
+    len: usize,
+    win_size: usize,
+    partial_windows: bool,
+) -> impl Iterator<Item = &str> {
+    src.char_indices()
+        .flat_map(move |(from, _)| {
+            src[from..]
+                .char_indices()
+                .skip(win_size - 1)
+                .next()
+                .map(|(to, c)| {
+                    (0..(if partial_windows && from >= len - win_size {
+                        win_size
+                    } else {
+                        1
+                    }))
+                        .map(move |x| &src[from + x..from + to + c.len_utf8()])
+                })
+        })
+        .flatten()
+}
+
+pub trait FirstLast<T>: IntoIterator<Item = T> + Sized {
+    fn first_or_last(self) -> (Option<T>, Option<T>);
+    fn first_maybe_last(self) -> Option<(T, Option<T>)> {
+        let (f, l) = self.first_or_last();
+        f.map(|x| (x, l))
+    }
+    fn first_and_last(self) -> Option<(T, T)> {
+        let (f, l) = self.first_or_last();
+        f.zip(l)
+    }
+}
+
+impl<I, T> FirstLast<T> for I
+where
+    I: IntoIterator<Item = T>,
+    T: Clone,
+{
+    fn first_or_last(self) -> (Option<T>, Option<T>) {
+        let mut iter = self.into_iter();
+        (iter.next(), iter.last())
+    }
+}
+
+pub trait IterDbg<T: std::fmt::Debug>: IntoIterator<Item = T> + Sized
+where
+    T: std::fmt::Debug + Sized,
+{
+    fn iter_dbg(self, name: &str) -> impl Iterator<Item = T>;
+}
+
+impl<I, T> IterDbg<T> for I
+where
+    I: Iterator<Item = T>,
+    T: Sized + std::fmt::Debug,
+{
+    fn iter_dbg(self, name: &str) -> impl Iterator<Item = T> {
+        {
+            self.into_iter().enumerate().map(move |(i, x)| {
+                eprintln!("iter={name}; i={i}; x={x:?}");
+                x
+            })
+        }
+    }
+}
 
 pub trait Transpose<T>: IntoIterator<Item = T> + Sized {
     fn transpose(self) -> Self;

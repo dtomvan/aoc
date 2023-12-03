@@ -1,5 +1,5 @@
 #![allow(incomplete_features)]
-#![feature(return_position_impl_trait_in_trait, let_chains)]
+#![feature(let_chains)]
 
 pub mod collections;
 pub mod dimensions;

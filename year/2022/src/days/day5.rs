@@ -5,13 +5,13 @@ pub fn main() -> AocResult {
         .split_once("\n\n")
         .res()?;
 
-    let inst: Vec<[usize; 3]> = inst
+    let inst = inst
         .split_whitespace()
         .filter_map(parse!())
         .array_chunks()
-        .collect();
+        .collect_vec();
 
-    let data: Vec<Vec<_>> = graph
+    let data = graph
         .lines()
         .map(|x| x.chars().skip(1).step_by(4).collect_vec())
         .filter(|x| !x.is_empty())
@@ -19,7 +19,7 @@ pub fn main() -> AocResult {
         .transpose()
         .into_iter()
         .map(|x| x.into_iter().filter(|x| x.is_alphabetic()).rev().collect())
-        .collect();
+        .collect_vec();
 
     done(s(inst.clone(), data.clone(), true), s(inst, data, false))
 }

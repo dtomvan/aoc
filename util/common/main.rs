@@ -6,6 +6,8 @@
     iterator_try_collect,
     hash_set_entry
 )]
+use std::io::Write;
+use std::process::{Command, Stdio};
 use std::{collections::HashMap, time::Instant};
 
 mod days;
@@ -33,6 +35,11 @@ fn main() -> anyhow::Result<()> {
 
         if let Ok((part_1, part_2)) = result {
             println!("Part 1: {part_1}\nPart 2: {part_2}\nTook {elapsed} μs");
+            if part_2.has_value() {
+                let _ = set_clip(format!("{part_2}"));
+            } else if part_1.has_value() {
+                let _ = set_clip(format!("{part_1}"));
+            }
 
             let lines = loc.get(format!("day{arg}.rs").as_str()).unwrap();
             println!("Lines of code: {lines}");
@@ -40,5 +47,14 @@ fn main() -> anyhow::Result<()> {
             eprintln!("Error: {}", result.unwrap_err());
         }
     }
+    Ok(())
+}
+
+fn set_clip(s: String) -> anyhow::Result<()> {
+    let mut command = Command::new("clipman")
+        .arg("store")
+        .stdin(Stdio::piped())
+        .spawn()?;
+    write!(command.stdin.take().unwrap(), "{s}")?;
     Ok(())
 }

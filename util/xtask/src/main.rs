@@ -4,6 +4,7 @@ use std::{fs::File, path::PathBuf};
 
 use anyhow::{anyhow, Context, Result};
 use chrono::{Datelike, Utc};
+use itertools::Itertools;
 use reqwest::blocking::Client;
 
 macro_rules! bail {
@@ -26,13 +27,15 @@ fn main() -> Result<()> {
             let year = args
                 .next()
                 .ok_or_else(|| anyhow!("Specify the year to update."))?
-                .parse()?;
-            let project_root = project_root(year)?;
+                .parse()
+                .unwrap();
+            let project_root = project_root(year).unwrap();
             generate_match_days(
                 &project_root.join("src/days"),
                 &project_root,
                 &project_root.join("inputs"),
-            )?;
+            )
+            .unwrap();
         }
         "year_dir" => {
             let (_, year) = date(args);
@@ -40,11 +43,14 @@ fn main() -> Result<()> {
         }
         "day" => {
             let (day, year) = date(args);
-            let project_root = project_root(year)?;
+            let project_root = project_root(year).unwrap();
             let days_dir = project_root.join("src/days");
-            std::fs::create_dir_all(&days_dir).context("Couldn't create days dir")?;
+            std::fs::create_dir_all(&days_dir)
+                .context("Couldn't create days dir")
+                .unwrap();
             let mut day_file = File::create(days_dir.join(format!("day{day}.rs")))
-                .context("Could not create today's file")?;
+                .context("Could not create today's file")
+                .unwrap();
             writeln!(
                 day_file,
                 r#"use aoc_common::prelude::*;
@@ -57,10 +63,11 @@ pub fn main() -> AocResult {{
 }}
 "#
             )
-            .context("Could not write to days file.")?;
+            .context("Could not write to days file.")
+            .unwrap();
 
             let inputs_dir = project_root.join("inputs");
-            generate_match_days(&days_dir, &project_root, &inputs_dir)?;
+            generate_match_days(&days_dir, &project_root, &inputs_dir).unwrap();
 
             let client = Client::new();
             let res = client
@@ -74,9 +81,10 @@ pub fn main() -> AocResult {{
                     "github.com/dtomvan/aoc by 18gatenmaker6@gmail.com",
                 )
                 .send()?
-                .text()?;
-            let mut day_input = File::create(inputs_dir.join(format!("day-{day}.txt")))?;
-            writeln!(day_input, "{res}")?;
+                .text()
+                .unwrap();
+            let mut day_input = File::create(inputs_dir.join(format!("day-{day}.txt"))).unwrap();
+            writeln!(day_input, "{res}").unwrap();
         }
         x => {
             bail!("No rules specified for target {x}.");
@@ -85,17 +93,13 @@ pub fn main() -> AocResult {{
     Ok(())
 }
 
-fn date(mut args: impl Iterator<Item = String>) -> (u32, i32) {
-    let day = args.next().and_then(|x| x.parse().ok());
-    let year = args.next().and_then(|x| x.parse().ok());
+fn date(args: impl Iterator<Item = String>) -> (u32, i32) {
+    if let Some((day, year)) = args.take(2).flat_map(|x| x.parse().ok()).collect_tuple() {
+        return (day, year as i32);
+    }
 
     let date = Utc::now().with_timezone(&chrono_tz::EST);
-    if date.month() != 12 && day.is_none() {
-        bail!("Error: it is not currently December and no days have been given.");
-    }
-    let day = day.unwrap_or_else(|| date.day());
-    let year = year.unwrap_or_else(|| date.year());
-    (day, year)
+    (date.day(), date.year())
 }
 
 fn project_root(year: i32) -> Result<PathBuf> {
@@ -124,7 +128,7 @@ fn generate_match_days(days_dir: &Path, project_root: &Path, inputs_dir: &Path) 
         .map(|x| format!(r#"	"{x}" => day{x}::main,"#))
         .collect();
 
-    let mut match_days = File::create(project_root.join("src/_match_days.rs"))?;
+    let mut match_days = File::create(project_root.join("src/_match_days.rs")).unwrap();
     writeln!(
         match_days,
         r#"match arg.as_str() {{
@@ -132,16 +136,22 @@ fn generate_match_days(days_dir: &Path, project_root: &Path, inputs_dir: &Path) 
     _ => unimplemented!(),
 }}"#,
         day_matchers.join("\n")
-    )?;
+    )
+    .unwrap();
 
-    std::fs::create_dir_all(inputs_dir).context("Couldn't create inputs dir")?;
+    std::fs::create_dir_all(inputs_dir)
+        .context("Couldn't create inputs dir")
+        .unwrap();
+    std::fs::create_dir_all(project_root.join("src/days"))
+        .context("Couldn't create days dir")
+        .unwrap();
 
-    let mut module_file = File::create(project_root.join("src/days/mod.rs"))?;
+    let mut module_file = File::create(project_root.join("src/days/mod.rs")).unwrap();
     let day_modules: Vec<_> = day_module_names
         .iter()
         .map(|x| format!("pub mod day{x};"))
         .collect();
-    writeln!(module_file, "{}", day_modules.join("\n"))?;
+    writeln!(module_file, "{}", day_modules.join("\n")).unwrap();
 
     Ok(())
 }

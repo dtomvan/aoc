@@ -1,18 +1,18 @@
 pub use self::Direction::*;
 
+use crate::{collections::Unavailable, dimensions::Dimensions};
 use std::{
     cmp::{max, min},
     ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub},
     str::FromStr,
 };
-use crate::{collections::Unavailable, dimensions::Dimensions};
 
-use itertools::Itertools;
 use derive_more::{
     Add, AddAssign, BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, Div, DivAssign,
     From, Mul, MulAssign, Neg, Not, Product, Rem, RemAssign, Shl, ShlAssign, Shr, ShrAssign, Sub,
     SubAssign, Sum,
 };
+use itertools::Itertools;
 use paste::paste;
 
 #[derive(

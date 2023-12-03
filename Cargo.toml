@@ -1,12 +1,10 @@
 [workspace]
-members = [
-    "util/*",
-    "year/*"
-]
+members = ["util/*", "year/*"]
 resolver = '2'
 
 [workspace.dependencies]
-anyhow = "1.0.66"
+anyhow = "1.0.75"
 itertools = "0.10.5"
 loc = { default-features = false, git = "https://github.com/dtomvan/loc" }
 criterion = "0.4"
+cli-clipboard = "0.4"
