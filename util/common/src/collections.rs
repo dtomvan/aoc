@@ -3,7 +3,7 @@ pub mod tuples;
 pub use tuples::*;
 
 use itertools::Itertools;
-use std::{hash::Hash, str::Chars};
+use std::{cmp::Ordering, hash::Hash, str::Chars};
 use thiserror::Error;
 
 pub trait CharWindows<'a, U, I>
@@ -23,33 +23,25 @@ where
         partial_windows: bool,
     ) -> impl Iterator<Item = &'a str> {
         let src = self.as_ref();
-        let len = src.len();
-        char_windows_str(src, len, win_size, partial_windows)
+        char_windows_str(src, win_size, partial_windows)
     }
 }
 
 pub fn char_windows_str(
     src: &str,
-    len: usize,
     win_size: usize,
     partial_windows: bool,
 ) -> impl Iterator<Item = &str> {
-    src.char_indices()
-        .flat_map(move |(from, _)| {
-            src[from..]
-                .char_indices()
-                .skip(win_size - 1)
-                .next()
-                .map(|(to, c)| {
-                    (0..(if partial_windows && from >= len - win_size {
-                        win_size
-                    } else {
-                        1
-                    }))
-                        .map(move |x| &src[from + x..from + to + c.len_utf8()])
-                })
-        })
-        .flatten()
+    let len = src.len();
+    src.char_indices().flat_map(move |(i, _)| {
+        let end = i + win_size;
+        match len.partial_cmp(&end).expect("usizes are always comparable") {
+            Ordering::Less if partial_windows => Some(len),
+            x if x != Ordering::Less => Some(end),
+            _ => None,
+        }
+        .map(|cend| &src[i..cend])
+    })
 }
 
 pub trait FirstLast<T>: IntoIterator<Item = T> + Sized {

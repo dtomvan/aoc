@@ -23,7 +23,8 @@ fn main() -> anyhow::Result<()> {
     println!("{rep}");
     println!("## {name} ##");
     println!("{rep}");
-    for arg in std::env::args().skip(1) {
+    let mut args = std::env::args().skip(1);
+    while let Some(arg) = args.next() {
         let func = include!("_match_days.rs");
 
         println!("\n=== Day {arg:0>2} ===");
@@ -35,10 +36,22 @@ fn main() -> anyhow::Result<()> {
 
         if let Ok((part_1, part_2)) = result {
             println!("Part 1: {part_1}\nPart 2: {part_2}\nTook {elapsed} μs");
-            if part_2.has_value() {
-                let _ = set_clip(format!("{part_2}"));
-            } else if part_1.has_value() {
-                let _ = set_clip(format!("{part_1}"));
+            if let (_, Some(remaining)) = args.size_hint()
+                && remaining == 0
+            {
+                if part_2.has_value() {
+                    if let Ok(_) = set_clip(format!("{part_2}")) {
+                        println!(
+                        "The solution to part 2, `{part_2}`, has been copied to your clipboard."
+                    );
+                    }
+                } else if part_1.has_value() {
+                    if let Ok(_) = set_clip(format!("{part_1}")) {
+                        println!(
+                        "The solution to part 1, `{part_1}`, has been copied to your clipboard."
+                    );
+                    }
+                }
             }
 
             let lines = loc.get(format!("day{arg}.rs").as_str()).unwrap();
