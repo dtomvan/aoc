@@ -18,7 +18,7 @@ pub fn main() -> AocResult {
     let mut part_2 = None;
     for draw in draws {
         let _ = boards
-            .extract_if(|board| {
+            .extract_if(.., |board| {
                 board
                     .iter_mut()
                     .filter(|x| x.has(draw))

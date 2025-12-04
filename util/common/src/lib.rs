@@ -1,6 +1,3 @@
-#![allow(incomplete_features)]
-#![feature(let_chains)]
-
 pub mod collections;
 pub mod dimensions;
 pub mod graph;

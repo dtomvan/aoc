@@ -1,7 +1,7 @@
 [package]
 name = "aoc_2023"
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
 build = "../../util/common/build.rs"
 homepage = "https://adventofcode.com/2023"
 

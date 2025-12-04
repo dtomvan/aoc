@@ -1,8 +1,6 @@
 #![feature(
     iter_array_chunks,
     iter_next_chunk,
-    extract_if,
-    let_chains,
     iterator_try_collect,
     hash_set_entry
 )]
