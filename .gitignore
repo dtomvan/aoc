@@ -3,3 +3,5 @@
 /target/
 /util/xtask/src/TOKEN
 /.idea/
+/.envrc
+/.direnv
