@@ -3,11 +3,11 @@ use std::{
     str::FromStr,
 };
 
-use itertools::{iproduct, Itertools};
+use itertools::{Itertools, iproduct};
 
 use crate::{
     collections::{OptionRes, Unavailable},
-    dimensions::{q_pos, Dimensions},
+    dimensions::{Dimensions, q_pos},
     point::Point,
 };
 

@@ -3,7 +3,7 @@
 use std::{
     fmt::Display,
     fs::File,
-    io::{prelude::*, BufReader, Cursor},
+    io::{BufReader, Cursor, prelude::*},
     ops::Deref,
     path::Path,
     str::FromStr,
@@ -332,4 +332,3 @@ macro_rules! chars {
         include_str!($file).trim().chars()
     };
 }
-

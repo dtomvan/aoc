@@ -150,18 +150,10 @@ pub trait BoolThen: Sized {
 
 impl BoolThen for bool {
     fn then<T>(self, value: T) -> Option<T> {
-        if self {
-            Some(value)
-        } else {
-            None
-        }
+        if self { Some(value) } else { None }
     }
 
     fn and_then<T>(self, mut value: impl FnMut() -> T) -> Option<T> {
-        if self {
-            Some(value())
-        } else {
-            None
-        }
+        if self { Some(value()) } else { None }
     }
 }

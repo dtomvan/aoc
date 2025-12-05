@@ -1,6 +1,6 @@
 // TODO: DRY
 use aoc_2022::days::*;
-use criterion::{criterion_group, criterion_main, Criterion};
+use criterion::{Criterion, criterion_group, criterion_main};
 
 pub fn day_1(c: &mut Criterion) {
     c.bench_function("day 1", |b| b.iter(day1::main));

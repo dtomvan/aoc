@@ -26,12 +26,14 @@ pub fn gcd<T: Gcd>(mut a: T, mut b: T) -> T {
     }
 }
 
-pub fn lcm<T: Gcd>(a: T, b: T) -> T
-{
+pub fn lcm<T: Gcd>(a: T, b: T) -> T {
     (a * b) / gcd(a, b)
 }
 
-pub trait Gcd: Add + Copy + Default + Div + From<u8> + Ord + PartialOrd + Rem + Sub + Unsigned {}
+pub trait Gcd:
+    Add + Copy + Default + Div + From<u8> + Ord + PartialOrd + Rem + Sub + Unsigned
+{
+}
 impl Gcd for u8 {}
 impl Gcd for u16 {}
 impl Gcd for u32 {}

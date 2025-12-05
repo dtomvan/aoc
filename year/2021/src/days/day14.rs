@@ -61,5 +61,5 @@ fn step_amount(
         .minmax_by_key(|x| x.1)
         .into_option()
         .unwrap();
-    result.1 .1 - result.0 .1
+    result.1.1 - result.0.1
 }

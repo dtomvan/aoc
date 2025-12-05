@@ -6,4 +6,3 @@ pub fn main() -> AocResult {
     // TODO
     done((), ())
 }
-

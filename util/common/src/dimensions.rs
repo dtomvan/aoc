@@ -69,11 +69,7 @@ impl Dimensions {
             let total_width = self.total_width();
             let p = Point(i % total_width, i / total_width) - self.map();
 
-            if self.bounds(&p) {
-                Some(p)
-            } else {
-                None
-            }
+            if self.bounds(&p) { Some(p) } else { None }
         })
     }
 
@@ -134,11 +130,7 @@ impl Dimensions {
     fn total_width(&self) -> isize {
         let q = self.n_quadrants() as isize;
         let w = self.pseudo_width();
-        if q != 1 {
-            w * q
-        } else {
-            w
-        }
+        if q != 1 { w * q } else { w }
     }
 
     #[inline(always)]

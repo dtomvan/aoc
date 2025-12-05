@@ -8,7 +8,9 @@ pub fn main() -> AocResult {
     // Part 2
     let mut chars = input.chars().enumerate();
     let mut floor = 0;
-    while let Some((_, c)) = chars.next() && floor >= 0 {
+    while let Some((_, c)) = chars.next()
+        && floor >= 0
+    {
         match c {
             '(' => floor += 1,
             ')' => floor -= 1,

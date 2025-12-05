@@ -40,14 +40,14 @@ fn main() -> anyhow::Result<()> {
                 if part_2.has_value() {
                     if let Ok(_) = set_clip(format!("{part_2}")) {
                         println!(
-                        "The solution to part 2, `{part_2}`, has been copied to your clipboard."
-                    );
+                            "The solution to part 2, `{part_2}`, has been copied to your clipboard."
+                        );
                     }
                 } else if part_1.has_value() {
                     if let Ok(_) = set_clip(format!("{part_1}")) {
                         println!(
-                        "The solution to part 1, `{part_1}`, has been copied to your clipboard."
-                    );
+                            "The solution to part 1, `{part_1}`, has been copied to your clipboard."
+                        );
                     }
                 }
             }

@@ -2,7 +2,7 @@ use std::io::Write;
 use std::path::Path;
 use std::{fs::File, path::PathBuf};
 
-use anyhow::{anyhow, Context, Result};
+use anyhow::{Context, Result, anyhow};
 use chrono::{Datelike, Utc};
 use itertools::Itertools;
 use reqwest::blocking::Client;

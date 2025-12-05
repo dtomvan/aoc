@@ -27,11 +27,7 @@ pub fn main() -> AocResult {
         CARDINALS,
         |x, p| {
             let n = x as isize + d.rep_amount(p).t().sum();
-            if n < 10 {
-                n
-            } else {
-                n - 9
-            }
+            if n < 10 { n } else { n - 9 }
         },
         |state| state.position == d.w_h() - 1,
     );
