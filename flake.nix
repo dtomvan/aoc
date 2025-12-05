@@ -21,38 +21,49 @@
 
       perSystem =
         { pkgs, lib, ... }:
+        let
+          mergeSources =
+            sources:
+            lib.pipe sources [
+              lib.fileset.unions
+              (
+                fileset:
+                lib.fileset.toSource {
+                  inherit fileset;
+                  root = ./.;
+                }
+              )
+            ];
+        in
         {
           treefmt = {
             programs.nixfmt.enable = true;
             programs.rustfmt.enable = true;
+            programs.fourmolu.enable = true;
           };
 
           packages = rec {
-            haskell = null;
+            haskell = pkgs.stdenv.mkDerivation (finalAttrs: {
+              pname = "aoc";
+              version = "0";
+              src = ./haskell;
+
+              nativeBuildInputs = [ pkgs.ghc ];
+
+              installPhase = "make PREFIX=$out install";
+            });
             default = haskell;
 
             rust = pkgs.rustPlatform.buildRustPackage (finalAttrs: {
               pname = "aoc";
               version = "0";
 
-              src =
-                lib.pipe
-                  [
-                    ./Cargo.toml
-                    ./Cargo.lock
-                    ./util/common
-                    ./year
-                  ]
-                  [
-                    lib.fileset.unions
-                    (
-                      fileset:
-                      lib.fileset.toSource {
-                        inherit fileset;
-                        root = ./.;
-                      }
-                    )
-                  ];
+              src = mergeSources [
+                ./Cargo.toml
+                ./Cargo.lock
+                ./util/common
+                ./year
+              ];
 
               nativeBuildInputs = with pkgs; [ pkg-config ];
 
