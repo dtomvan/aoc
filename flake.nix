@@ -38,7 +38,10 @@
         {
           treefmt = {
             programs.nixfmt.enable = true;
-            programs.rustfmt.enable = true;
+            programs.rustfmt = {
+              enable = true;
+              excludes = [ "year/*/src/_match_days.rs" ];
+            };
             programs.fourmolu.enable = true;
           };
 
