@@ -104,6 +104,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "aoc_2025"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "aoc_common",
+ "criterion",
+ "itertools 0.10.5",
+ "loc",
+]
+
+[[package]]
 name = "aoc_common"
 version = "0.1.0"
 dependencies = [
